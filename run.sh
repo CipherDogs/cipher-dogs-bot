@@ -1,2 +1,2 @@
 #!/bin/bash
-TOKEN=<token> python3 bot.py
+TOKEN=<token> /usr/bin/python3 bot.py
