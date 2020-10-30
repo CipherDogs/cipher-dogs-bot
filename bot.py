@@ -1,4 +1,5 @@
 import os
+import requests
 import telebot
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
@@ -23,6 +24,16 @@ def send_sticker_en(message):
         bot.delete_message(
             message.chat.id, last_sticker[message.chat.username])
     last_sticker[message.chat.username] = message.message_id + 1
+
+
+@bot.message_handler(commands=['statistics'])
+def statistics(message):
+    r = requests.get('https://api.cyber.cybernode.ai/index_stats')
+    linksCount = r.json()['result']['linksCount']
+    cidsCount = r.json()['result']['cidsCount']
+    accountsCount = r.json()['result']['accountsCount']
+    bot.send_message(message.chat.id, '`cyberlinks: {}\ncontent ids: {}\naccounts: {}`'.format(
+        linksCount, cidsCount, accountsCount), parse_mode='Markdown')
 
 
 bot.polling()
