@@ -1,6 +1,10 @@
+import datetime
 import os
 import requests
+import schedule
 import telebot
+import threading
+import time
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 last_sticker = {'cyber_russian_community': 0, 'fuckgoogle': 0}
@@ -35,5 +39,34 @@ def statistics(message):
     bot.send_message(message.chat.id, '`cyberlinks: {}\ncontent ids: {}\naccounts: {}`'.format(
         linksCount, cidsCount, accountsCount), parse_mode='Markdown')
 
+
+def get_date():
+    today = datetime.date.today()
+    return '{}.{}.{}\n'.format(today.day, today.month, today.year)
+
+
+def print_statistics():
+    r = requests.get('https://api.cyber.cybernode.ai/index_stats')
+    linksCount = r.json()['result']['linksCount']
+    cidsCount = r.json()['result']['cidsCount']
+    accountsCount = r.json()['result']['accountsCount']
+
+    text = '`statistics {}\ncyberlinks: {}\ncontent ids: {}\naccounts: {}`'.format(get_date(),
+                                                                                   linksCount, cidsCount, accountsCount)
+
+    bot.send_message('@cyber_russian_community', text, parse_mode='Markdown')
+    bot.send_message('@fuckgoogle', text, parse_mode='Markdown')
+
+
+def run_func():
+    schedule.every().day.at("16:00").do(print_statistics)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+
+th = threading.Thread(target=run_func, args=())
+th.start()
 
 bot.polling()
