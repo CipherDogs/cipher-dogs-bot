@@ -1,6 +1,4 @@
 import datetime
-import json
-from json.decoder import JSONDecodeError
 import os
 import requests
 import schedule
@@ -10,18 +8,6 @@ import time
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 data = {'cyber_russian_community': 0, 'fuckgoogle': 0}
-
-with open('data.json', 'r') as json_file:
-    try:
-        data = json.load(json_file)
-    except JSONDecodeError:
-        with open('data.json', 'w') as json_file:
-            json.dump(data, outfile)
-
-
-def write_file():
-    with open('data.json', 'w') as outfile:
-        json.dump(data, outfile)
 
 
 @bot.message_handler(commands=['start'])
@@ -38,7 +24,6 @@ def send_sticker_ru(message):
         bot.delete_message(
             message.chat.id, data[message.chat.username])
     data[message.chat.username] = message.message_id + 1
-    write_file()
 
 
 @bot.message_handler(func=lambda message: message.chat.username == 'fuckgoogle', content_types=['new_chat_members'])
@@ -49,7 +34,6 @@ def send_sticker_en(message):
         bot.delete_message(
             message.chat.id, data[message.chat.username])
     data[message.chat.username] = message.message_id + 1
-    write_file()
 
 
 def get_date():
