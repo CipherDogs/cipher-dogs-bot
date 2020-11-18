@@ -1,4 +1,6 @@
 import datetime
+import json
+from json.decoder import JSONDecodeError
 import os
 import requests
 import schedule
@@ -7,37 +9,47 @@ import threading
 import time
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
-last_sticker = {'cyber_russian_community': 0, 'fuckgoogle': 0}
+data = {'cyber_russian_community': 0, 'fuckgoogle': 0}
+
+with open('data.json', 'r') as json_file:
+    try:
+        data = json.load(json_file)
+    except JSONDecodeError:
+        with open('data.json', 'w') as json_file:
+            json.dump(data, outfile)
+
+
+def write_file():
+    with open('data.json', 'w') as outfile:
+        json.dump(data, outfile)
+
+
+@bot.message_handler(commands=['start'])
+def welcome(message):
+    bot.send_message(
+        message.chat.id, 'CipherDogsBot\nFuck Google! Fuck Twitter! Fuck Web2.0')
 
 
 @bot.message_handler(func=lambda message: message.chat.username == 'cyber_russian_community', content_types=['new_chat_members'])
 def send_sticker_ru(message):
     bot.send_sticker(
         message.chat.id, 'CAACAgIAAxkBAAJAXV-ZAjfq6sotbN3e5_Nc-NMc3RWlAAJWAQACK9RLC9RAtYotQ8NPGwQ')
-    if last_sticker[message.chat.username] != 0:
+    if data[message.chat.username] != 0:
         bot.delete_message(
-            message.chat.id, last_sticker[message.chat.username])
-    last_sticker[message.chat.username] = message.message_id + 1
+            message.chat.id, data[message.chat.username])
+    data[message.chat.username] = message.message_id + 1
+    write_file()
 
 
 @bot.message_handler(func=lambda message: message.chat.username == 'fuckgoogle', content_types=['new_chat_members'])
 def send_sticker_en(message):
     bot.send_sticker(
         message.chat.id, 'CAACAgIAAxkBAAJAhl-ZZlpBtcyICOlr_VyWthXoch_7AAIYAQACK9RLC7eumetzzfY-GwQ')
-    if last_sticker[message.chat.username] != 0:
+    if data[message.chat.username] != 0:
         bot.delete_message(
-            message.chat.id, last_sticker[message.chat.username])
-    last_sticker[message.chat.username] = message.message_id + 1
-
-
-@bot.message_handler(commands=['statistics'])
-def statistics(message):
-    r = requests.get('https://api.cyber.cybernode.ai/index_stats')
-    linksCount = r.json()['result']['linksCount']
-    cidsCount = r.json()['result']['cidsCount']
-    accountsCount = r.json()['result']['accountsCount']
-    bot.send_message(message.chat.id, '`cyberlinks: {}\ncontent ids: {}\naccounts: {}`'.format(
-        linksCount, cidsCount, accountsCount), parse_mode='Markdown')
+            message.chat.id, data[message.chat.username])
+    data[message.chat.username] = message.message_id + 1
+    write_file()
 
 
 def get_date():
