@@ -65,4 +65,8 @@ def run_func():
 th = threading.Thread(target=run_func, args=())
 th.start()
 
-bot.polling(True)
+while True:
+    try:
+        bot.polling(none_stop=True)
+    except Exception as ex:
+        print(ex)
