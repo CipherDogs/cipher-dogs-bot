@@ -10,6 +10,15 @@ bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 data = {'cyber_russian_community': 0, 'fuckgoogle': 0}
 
 
+def delete_message(message):
+    try:
+        if data[message.chat.username] != 0:
+            bot.delete_message(message.chat.id, data[message.chat.username])
+        data[message.chat.username] = message.message_id + 1
+    except:
+        data[message.chat.username] = 0
+
+
 @bot.message_handler(commands=['start'])
 def welcome(message):
     bot.send_message(
@@ -20,20 +29,14 @@ def welcome(message):
 def send_sticker_ru(message):
     bot.send_sticker(
         message.chat.id, 'CAACAgIAAxkBAAJAXV-ZAjfq6sotbN3e5_Nc-NMc3RWlAAJWAQACK9RLC9RAtYotQ8NPGwQ')
-    if data[message.chat.username] != 0:
-        bot.delete_message(
-            message.chat.id, data[message.chat.username])
-    data[message.chat.username] = message.message_id + 1
+    delete_message(message)
 
 
 @bot.message_handler(func=lambda message: message.chat.username == 'fuckgoogle', content_types=['new_chat_members'])
 def send_sticker_en(message):
     bot.send_sticker(
         message.chat.id, 'CAACAgIAAxkBAAJAhl-ZZlpBtcyICOlr_VyWthXoch_7AAIYAQACK9RLC7eumetzzfY-GwQ')
-    if data[message.chat.username] != 0:
-        bot.delete_message(
-            message.chat.id, data[message.chat.username])
-    data[message.chat.username] = message.message_id + 1
+    delete_message(message)
 
 
 def get_date():
