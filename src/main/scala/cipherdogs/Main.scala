@@ -66,7 +66,7 @@ object Main extends IOApp {
     case _: ChatMemberAdded =>
       msg.chat match {
         case Supergroup(_, _, username) if username.contains("cyber_russian_community") => msg.chat.send(cyberRussianCommunity)
-        case Supergroup(_, _, username) if username.contains("fuckgoogle")              => msg.chat.send(cyberRussianCommunity)
+        case Supergroup(_, _, username) if username.contains("fuckgoogle")              => msg.chat.send(fuckgoogle)
       }
     case _ => msg.chat.send("Nop")
   }
