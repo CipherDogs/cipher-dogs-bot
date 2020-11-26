@@ -1,6 +1,7 @@
 package cipherdogs
 
 import canoe.api._
+import canoe.models.{Supergroup, Sticker}
 import canoe.models.messages.{ChatMemberAdded, TelegramMessage}
 import canoe.syntax._
 import cats.effect.concurrent.Semaphore
@@ -10,6 +11,32 @@ import fs2.Stream
 
 object Main extends IOApp {
   val token: String = scala.util.Properties.envOrElse("TOKEN", "undefined")
+
+  val cyberRussianCommunity: Sticker = Sticker(
+    "CAACAgIAAxkBAAJAXV-ZAjfq6sotbN3e5_Nc-NMc3RWlAAJWAQACK9RLC9RAtYotQ8NPGwQ",
+    "CAACAgIAAxkBAAJAXV-ZAjfq6sotbN3e5_Nc-NMc3RWlAAJWAQACK9RLC9RAtYotQ8NPGwQ",
+    0,
+    0,
+    false,
+    None,
+    None,
+    None,
+    None,
+    None,
+  )
+
+  val fuckgoogle: Sticker = Sticker(
+    "CAACAgIAAxkBAAJAhl-ZZlpBtcyICOlr_VyWthXoch_7AAIYAQACK9RLC7eumetzzfY-GwQ",
+    "CAACAgIAAxkBAAJAhl-ZZlpBtcyICOlr_VyWthXoch_7AAIYAQACK9RLC7eumetzzfY-GwQ",
+    0,
+    0,
+    false,
+    None,
+    None,
+    None,
+    None,
+    None,
+  )
 
   def run(args: List[String]): IO[ExitCode] =
     Stream
@@ -36,7 +63,11 @@ object Main extends IOApp {
     } yield ()
 
   def greetingBack[F[_]: TelegramClient](msg: TelegramMessage): F[_] = msg match {
-    case _: ChatMemberAdded => msg.chat.send("CipherDogsBot\nFuck Google! Fuck Twitter! Fuck Web2.0")
-    case _                  => msg.chat.send("Nop")
+    case _: ChatMemberAdded =>
+      msg.chat match {
+        case Supergroup(_, _, username) if username.contains("cyber_russian_community") => msg.chat.send(cyberRussianCommunity)
+        case Supergroup(_, _, username) if username.contains("fuckgoogle")              => msg.chat.send(cyberRussianCommunity)
+      }
+    case _ => msg.chat.send("Nop")
   }
 }
