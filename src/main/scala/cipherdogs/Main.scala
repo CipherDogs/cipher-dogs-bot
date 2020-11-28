@@ -1,7 +1,7 @@
 package cipherdogs
 
 import canoe.api._
-import canoe.models.{Supergroup, Sticker}
+import canoe.models.{Chat, Supergroup, Sticker}
 import canoe.models.messages.{ChatMemberAdded, TelegramMessage}
 import canoe.syntax._
 import cats.effect.concurrent.Semaphore
@@ -70,4 +70,9 @@ object Main extends IOApp {
       }
     case _ => msg.chat.send("Nop")
   }
+
+  def statistics[F[_]: TelegramClient](chat: Chat, message: String): Scenario[F, Unit] =
+    for {
+      _ <- Scenario.eval(chat.send(message))
+    } yield ()
 }
