@@ -4,10 +4,13 @@ ThisBuild / scalaVersion := "2.13.3"
 ThisBuild / version := "0.1.0"
 ThisBuild / organization := "net.cipherdogs"
 ThisBuild / organizationName := "cipherdogs"
+ThisBuild / semanticdbEnabled := true
+ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 
 lazy val root = (project in file("."))
   .settings(
     name := "CipherDogsBot",
+    scalacOptions += "-Wunused:imports",
     libraryDependencies ++= common
   )
 
