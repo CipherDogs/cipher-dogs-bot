@@ -1,0 +1,15 @@
+[package]
+name = "cipher-dogs-bot"
+version = "0.1.0"
+authors = ["DEADBLACKCLOVER <deadblackclover@protonmail.com>"]
+description = "Telegram bot"
+edition = "2018"
+license = "GPL-3.0"
+readme = "README.md"
+homepage = "https://github.com/CipherDogs/cipher-dogs-bot"
+repository = "https://github.com/CipherDogs/cipher-dogs-bot"
+keywords = ["cipherdogs", "bot"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
