@@ -13,8 +13,9 @@ import scala.concurrent.duration._
 object Main extends IOApp {
   val token: String = scala.util.Properties.envOrElse("TOKEN", "undefined")
 
-  val ruChat: Supergroup = Supergroup(-1001259375319L, None, Some("cyber_russian_community"))
-  val enChat: Supergroup = Supergroup(-1001187351352L, None, Some("fuckgoogle"))
+  val ruChat: Supergroup   = Supergroup(-1001259375319L, None, Some("cyber_russian_community"))
+  val enChat: Supergroup   = Supergroup(-1001187351352L, None, Some("fuckgoogle"))
+  val testChat: Supergroup = Supergroup(-1001187351352L, None, Some("fuckgoogle"))
 
   val ruSticker: Sticker = Sticker(
     "CAACAgIAAxkBAAJAXV-ZAjfq6sotbN3e5_Nc-NMc3RWlAAJWAQACK9RLC9RAtYotQ8NPGwQ",
@@ -46,8 +47,11 @@ object Main extends IOApp {
     Stream
       .resource(TelegramClient.global[IO](token))
       .flatMap { implicit client =>
-        Stream.eval(Semaphore[IO](0)).flatMap { sem =>
-          Bot.polling[IO].follow(start(sem), chatID(sem), greeting(sem))
+        {
+          Stream.eval(Semaphore[IO](0)).flatMap { sem =>
+            Bot.polling[IO].follow(start(sem), chatID(sem), greeting(sem))
+          }
+          statistics(testChat)
         }
       }
       .compile
@@ -79,11 +83,12 @@ object Main extends IOApp {
       }
     } yield ()
 
-  def statistics[F[_]: TelegramClient: Timer](semaphore: Semaphore[F], chat: Chat): Scenario[F, Unit] = chat match {
-    case Supergroup(_, _, username) if username.contains("cyber_russian_community") || username.contains("fuckgoogle") =>
+  def statistics[F[_]: TelegramClient: Timer](chat: Chat): Scenario[F, Unit] = chat match {
+    //case Supergroup(_, _, username) if username.contains("cyber_russian_community") || username.contains("fuckgoogle") =>
+    case Supergroup(_, _, username) if username.contains("tesbot31337") =>
       for {
         _ <- Scenario.eval(chat.send(s"Statistics"))
-        _ <- Scenario.eval(Timer[F].sleep(4.hours)) >> statistics(semaphore, chat)
+        _ <- Scenario.eval(Timer[F].sleep(10.seconds)) >> statistics(chat)
       } yield ()
   }
 }
