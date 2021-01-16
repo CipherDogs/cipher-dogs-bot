@@ -13,7 +13,7 @@ data = {'cyber_russian_community': 0, 'fuckgoogle': 0}
 @bot.message_handler(commands=['start'])
 def welcome(message):
     bot.send_message(
-        message.chat.id, 'CipherDogsBot\nFuck Google! Fuck Twitter! Fuck Web2.0')
+        message.chat.id, 'CipherDogsBot\nFuck Google! Fuck Twitter! Fuck Web2.0\nhttps://cipherdogs.net/')
 
 
 def delete_message(message):
