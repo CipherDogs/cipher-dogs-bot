@@ -62,8 +62,7 @@ def print_statistics():
 
 @bot.message_handler(commands=['statistics'])
 def welcome(message):
-    bot.send_message(
-        message.chat.id, get_statistics())
+    bot.send_message(message.chat.id, get_statistics(), parse_mode='Markdown')
 
 
 def run_func():
