@@ -10,6 +10,12 @@ bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 data = {'cyber_russian_community': 0, 'fuckgoogle': 0}
 
 
+@bot.message_handler(commands=['start'])
+def welcome(message):
+    bot.send_message(
+        message.chat.id, 'CipherDogsBot\nFuck Google! Fuck Twitter! Fuck Web2.0')
+
+
 def delete_message(message):
     try:
         if data[message.chat.username] != 0:
@@ -17,12 +23,6 @@ def delete_message(message):
         data[message.chat.username] = message.message_id + 1
     except:
         data[message.chat.username] = 0
-
-
-@bot.message_handler(commands=['start'])
-def welcome(message):
-    bot.send_message(
-        message.chat.id, 'CipherDogsBot\nFuck Google! Fuck Twitter! Fuck Web2.0')
 
 
 @bot.message_handler(func=lambda message: message.chat.username == 'cyber_russian_community', content_types=['new_chat_members'])
@@ -44,17 +44,26 @@ def get_date():
     return '{}.{}.{}\n'.format(today.day, today.month, today.year)
 
 
-def print_statistics():
+def get_statistics():
     r = requests.get('https://api.cyber.cybernode.ai/index_stats')
     linksCount = r.json()['result']['linksCount']
     cidsCount = r.json()['result']['cidsCount']
     accountsCount = r.json()['result']['accountsCount']
 
-    text = '`statistics {}\ncyberlinks: {}\ncontent ids: {}\naccounts: {}`'.format(get_date(),
+    return '`statistics {}\ncyberlinks: {}\ncontent ids: {}\naccounts: {}`'.format(get_date(),
                                                                                    linksCount, cidsCount, accountsCount)
 
+
+def print_statistics():
+    text = get_statistics()
     bot.send_message('@cyber_russian_community', text, parse_mode='Markdown')
     bot.send_message('@fuckgoogle', text, parse_mode='Markdown')
+
+
+@bot.message_handler(commands=['statistics'])
+def welcome(message):
+    bot.send_message(
+        message.chat.id, get_statistics())
 
 
 def run_func():
