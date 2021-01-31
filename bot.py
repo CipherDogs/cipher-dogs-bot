@@ -5,8 +5,10 @@ import schedule
 import telebot
 import threading
 import time
+from price import price
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
+coins = ['btc', 'eth', 'xmr', 'dot', 'grin', 'ksm']
 data = {'cyber_russian_community': 0, 'fuckgoogle': 0}
 
 
@@ -60,8 +62,13 @@ def print_statistics():
     bot.send_message('@fuckgoogle', text, parse_mode='Markdown')
 
 
+@bot.message_handler(commands=['price'])
+def price_coins(message):
+    bot.send_message(message.chat.id, price(coins))
+
+
 @bot.message_handler(commands=['statistics'])
-def welcome(message):
+def statistics(message):
     bot.send_message(message.chat.id, get_statistics(), parse_mode='Markdown')
 
 

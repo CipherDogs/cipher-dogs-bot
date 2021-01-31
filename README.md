@@ -1,2 +1,2 @@
-# cipher-dogs-bot
-Telegram bot
+## Cipher-Dogs-Bot
+
