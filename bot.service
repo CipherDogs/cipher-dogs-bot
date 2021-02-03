@@ -9,7 +9,7 @@ Restart=always
 RestartSec=1
 User=root
 Environment=TOKEN=token
-ExecStart=/usr/bin/python3 /root/cipher-dogs-bot/src/bot.py
+ExecStart=/usr/bin/python3 /root/cipher-dogs-bot/src/main.py
 
 [Install]
 WantedBy=multi-user.target

@@ -1,21 +1,14 @@
-import datetime
 import os
 import requests
 import schedule
 import telebot
 import threading
 import time
-from price import price
+from library import get_date, get_prices, get_statistics
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 coins = ['btc', 'eth', 'xmr', 'dot', 'grin', 'ksm']
 data = {'cyber_russian_community': 0, 'fuckgoogle': 0}
-
-
-@bot.message_handler(commands=['start'])
-def welcome(message):
-    bot.send_message(
-        message.chat.id, 'CipherDogsBot\nFuck Google! Fuck Twitter! Fuck Web2.0\nhttps://cipherdogs.net/')
 
 
 def delete_message(message):
@@ -25,6 +18,18 @@ def delete_message(message):
         data[message.chat.username] = message.message_id + 1
     except:
         data[message.chat.username] = 0
+
+
+def print_statistics():
+    text = get_statistics()
+    bot.send_message('@cyber_russian_community', text, parse_mode='Markdown')
+    bot.send_message('@fuckgoogle', text, parse_mode='Markdown')
+
+
+@bot.message_handler(commands=['start'])
+def welcome(message):
+    bot.send_message(
+        message.chat.id, 'CipherDogsBot\nFuck Google! Fuck Twitter! Fuck Web2.0\nhttps://cipherdogs.net/')
 
 
 @bot.message_handler(func=lambda message: message.chat.username == 'cyber_russian_community', content_types=['new_chat_members'])
@@ -41,30 +46,9 @@ def send_sticker_en(message):
     delete_message(message)
 
 
-def get_date():
-    today = datetime.date.today()
-    return '{}.{}.{}\n'.format(today.day, today.month, today.year)
-
-
-def get_statistics():
-    r = requests.get('https://api.cyber.cybernode.ai/index_stats')
-    linksCount = r.json()['result']['linksCount']
-    cidsCount = r.json()['result']['cidsCount']
-    accountsCount = r.json()['result']['accountsCount']
-
-    return '`statistics {}\ncyberlinks: {}\ncontent ids: {}\naccounts: {}`'.format(get_date(),
-                                                                                   linksCount, cidsCount, accountsCount)
-
-
-def print_statistics():
-    text = get_statistics()
-    bot.send_message('@cyber_russian_community', text, parse_mode='Markdown')
-    bot.send_message('@fuckgoogle', text, parse_mode='Markdown')
-
-
 @bot.message_handler(commands=['price'])
 def price_coins(message):
-    bot.send_message(message.chat.id, price(coins))
+    bot.send_message(message.chat.id, get_prices(coins))
 
 
 @bot.message_handler(commands=['statistics'])
