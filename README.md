@@ -1,6 +1,6 @@
 # CipherDogsBot
-Telegram bot
+Multifunctional Telegram bot
 
 [Use a bot](https://t.me/cipher_dogs_bot)
 
-Our bot in Telegram work with statistics and prices. Also involved in helping communities.
+This multifunctional bot on Telegram is dedicated to helping communities. Also works with various statistics and prices.
