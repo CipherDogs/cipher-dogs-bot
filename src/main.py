@@ -4,7 +4,7 @@ import schedule
 import telebot
 import threading
 import time
-from library import get_date, get_prices, get_statistics
+from library import get_prices, get_statistics, get_scramble
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 coins = ['btc', 'eth', 'xmr', 'dot', 'grin', 'ksm']
@@ -49,6 +49,11 @@ def send_sticker_en(message):
 @bot.message_handler(commands=['price'])
 def price_coins(message):
     bot.send_message(message.chat.id, get_prices(coins))
+
+
+@bot.message_handler(commands=['scramble'])
+def scramble(message):
+    bot.send_message(message.chat.id, get_scramble())
 
 
 @bot.message_handler(commands=['statistics'])
