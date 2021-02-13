@@ -4,24 +4,55 @@ import schedule
 import telebot
 import threading
 import time
-from library import get_prices, get_statistics, get_scramble
+from library import get_prices, get_statistics, get_scramble, get_date
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 coins = ['btc', 'eth', 'xmr', 'dot', 'grin', 'ksm']
-data = {'cyber_russian_community': 0, 'fuckgoogle': 0}
+last_message = {'cyber_russian_community': 0, 'fuckgoogle': 0}
+last_statistics = {
+    'linksCount': 0,
+    'cidsCount': 0,
+    'accountsCount': 0,
+}
 
 
 def delete_message(message):
     try:
-        if data[message.chat.username] != 0:
-            bot.delete_message(message.chat.id, data[message.chat.username])
-        data[message.chat.username] = message.message_id + 1
+        if last_message[message.chat.username] != 0:
+            bot.delete_message(message.chat.id, last_message[message.chat.username])
+        last_message[message.chat.username] = message.message_id + 1
     except:
-        data[message.chat.username] = 0
+        last_message[message.chat.username] = 0
 
 
 def print_statistics():
-    text = get_statistics()
+    data = get_statistics()
+
+    linksCount = ''
+    cidsCount = ''
+    accountsCount = ''
+
+    if last_statistics['linksCount'] == 0:
+        linksCount = 'cyberlinks: {}'.format(data['linksCount'])
+    else:
+        linksCount = 'cyberlinks: {} ({})'.format(data['linksCount'], data['linksCount'] - last_statistics['linksCount'])
+
+    if last_statistics['cidsCount'] == 0:
+        linksCount = 'content ids: {}'.format(data['cidsCount'])
+    else:
+        linksCount = 'content ids: {} ({})'.format(data['cidsCount'], data['cidsCount'] - last_statistics['cidsCount'])
+
+    if last_statistics['accountsCount'] == 0:
+        linksCount = 'accounts: {}'.format(data['accountsCount'])
+    else:
+        linksCount = 'accounts: {} ({})'.format(data['accountsCount'], data['accountsCount'] - last_statistics['accountsCount'])
+
+    last_statistics['linksCount'] = data['linksCount']
+    last_statistics['cidsCount'] = data['cidsCount']
+    last_statistics['accountsCount'] = data['accountsCount']
+
+    text = '`statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, cidsCount, accountsCount)
+
     bot.send_message('@cyber_russian_community', text, parse_mode='Markdown')
     bot.send_message('@fuckgoogle', text, parse_mode='Markdown')
 
@@ -58,7 +89,15 @@ def scramble(message):
 
 @bot.message_handler(commands=['statistics'])
 def statistics(message):
-    bot.send_message(message.chat.id, get_statistics(), parse_mode='Markdown')
+    data = get_statistics()
+
+    linksCount = 'cyberlinks: {}'.format(data['linksCount'])
+    cidsCount = 'content ids: {}'.format(data['cidsCount'])
+    accountsCount = 'accounts: {}'.format(data['accountsCount'])
+
+    text = '`statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, cidsCount, accountsCount)
+
+    bot.send_message(message.chat.id, text, parse_mode='Markdown')
 
 
 def run_func():

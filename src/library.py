@@ -24,11 +24,11 @@ def get_date():
 
 def get_statistics():
     r = requests.get('https://api.cyber.cybernode.ai/index_stats')
-    linksCount = 'cyberlinks: {}'.format(r.json()['result']['linksCount'])
-    cidsCount = 'content ids: {}'.format(r.json()['result']['cidsCount'])
-    accountsCount = 'accounts: {}'.format(r.json()['result']['accountsCount'])
-    return '`statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, cidsCount, accountsCount)
-
+    data = {}
+    data['linksCount'] = r.json()['result']['linksCount']
+    data['cidsCount'] = r.json()['result']['cidsCount']
+    data['accountsCount'] = r.json()['result']['accountsCount']
+    return data
 
 def get_scramble():
     scramble_length = random.randint(25, 28)
