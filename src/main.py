@@ -9,11 +9,7 @@ from library import get_prices, get_statistics, get_scramble, get_date
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 coins = ['btc', 'eth', 'xmr', 'dot', 'grin', 'ksm']
 last_message = {'cyber_russian_community': 0, 'fuckgoogle': 0}
-last_statistics = {
-    'linksCount': 0,
-    'cidsCount': 0,
-    'accountsCount': 0,
-}
+last_statistics = {'linksCount': 0, 'cidsCount': 0, 'accountsCount': 0,}
 
 
 def delete_message(message):
@@ -23,6 +19,10 @@ def delete_message(message):
         last_message[message.chat.username] = message.message_id + 1
     except:
         last_message[message.chat.username] = 0
+
+
+def persent(last, new):
+    return round((new - last) / new * 100, 1)
 
 
 def print_statistics():
@@ -35,17 +35,20 @@ def print_statistics():
     if last_statistics['linksCount'] == 0:
         linksCount = 'cyberlinks: {}'.format(data['linksCount'])
     else:
-        linksCount = 'cyberlinks: {} ({})'.format(data['linksCount'], data['linksCount'] - last_statistics['linksCount'])
+        per = persent(int(data['linksCount']), last_statistics['linksCount'])
+        linksCount = 'cyberlinks: {} ({}% in 24 hours)'.format(data['linksCount'], per)
 
     if last_statistics['cidsCount'] == 0:
-        linksCount = 'content ids: {}'.format(data['cidsCount'])
+        cidsCount = 'content ids: {}'.format(data['cidsCount'])
     else:
-        linksCount = 'content ids: {} ({})'.format(data['cidsCount'], data['cidsCount'] - last_statistics['cidsCount'])
+        per = persent(int(data['cidsCount']) ,last_statistics['cidsCount'])
+        cidsCount = 'content ids: {} ({}% in 24 hours)'.format(data['cidsCount'], per)
 
     if last_statistics['accountsCount'] == 0:
-        linksCount = 'accounts: {}'.format(data['accountsCount'])
+        accountsCount = 'accounts: {}'.format(data['accountsCount'])
     else:
-        linksCount = 'accounts: {} ({})'.format(data['accountsCount'], data['accountsCount'] - last_statistics['accountsCount'])
+        per = persent(int(data['accountsCount']), last_statistics['accountsCount'])
+        accountsCount = 'accounts: {} ({}% in 24 hours)'.format(data['accountsCount'], per)
 
     last_statistics['linksCount'] = data['linksCount']
     last_statistics['cidsCount'] = data['cidsCount']
