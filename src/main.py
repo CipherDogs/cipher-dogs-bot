@@ -35,19 +35,19 @@ def print_statistics():
     if last_statistics['linksCount'] == 0:
         linksCount = 'cyberlinks: {}'.format(data['linksCount'])
     else:
-        per = persent(int(data['linksCount']), last_statistics['linksCount'])
+        per = persent(int(data['linksCount']), int(last_statistics['linksCount']))
         linksCount = 'cyberlinks: {} ({}% in 24 hours)'.format(data['linksCount'], per)
 
     if last_statistics['cidsCount'] == 0:
         cidsCount = 'content ids: {}'.format(data['cidsCount'])
     else:
-        per = persent(int(data['cidsCount']) ,last_statistics['cidsCount'])
+        per = persent(int(data['cidsCount']), int(last_statistics['cidsCount']))
         cidsCount = 'content ids: {} ({}% in 24 hours)'.format(data['cidsCount'], per)
 
     if last_statistics['accountsCount'] == 0:
         accountsCount = 'accounts: {}'.format(data['accountsCount'])
     else:
-        per = persent(int(data['accountsCount']), last_statistics['accountsCount'])
+        per = persent(int(data['accountsCount']), int(last_statistics['accountsCount']))
         accountsCount = 'accounts: {} ({}% in 24 hours)'.format(data['accountsCount'], per)
 
     last_statistics['linksCount'] = data['linksCount']
