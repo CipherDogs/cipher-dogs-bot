@@ -21,10 +21,6 @@ def delete_message(message):
         last_message[message.chat.username] = 0
 
 
-def persent(last, new):
-    return round((new - last) / new * 100, 1)
-
-
 def print_statistics():
     data = get_statistics()
 
@@ -36,19 +32,28 @@ def print_statistics():
         linksCount = 'cyberlinks: {}'.format(data['linksCount'])
     else:
         diff = int(data['linksCount']) - int(last_statistics['linksCount'])
-        linksCount = 'cyberlinks: {} ({})'.format(data['linksCount'], diff)
+        if diff > 0:
+            linksCount = 'cyberlinks: {} (+{})'.format(data['linksCount'], diff)
+        else:
+            linksCount = 'cyberlinks: {} ({})'.format(data['linksCount'], diff)
 
     if last_statistics['cidsCount'] == 0:
         cidsCount = 'content ids: {}'.format(data['cidsCount'])
     else:
         diff = int(data['cidsCount']) - int(last_statistics['cidsCount'])
-        cidsCount = 'content ids: {} ({})'.format(data['cidsCount'], diff)
+        if diff > 0:
+            cidsCount = 'content ids: {} (+{})'.format(data['cidsCount'], diff)
+        else:
+            cidsCount = 'content ids: {} ({})'.format(data['cidsCount'], diff)
 
     if last_statistics['accountsCount'] == 0:
         accountsCount = 'accounts: {}'.format(data['accountsCount'])
     else:
         diff = int(data['accountsCount']) - int(last_statistics['accountsCount'])
-        accountsCount = 'accounts: {} ({})'.format(data['accountsCount'], diff)
+        if diff > 0:
+            accountsCount = 'accounts: {} (+{})'.format(data['accountsCount'], diff)
+        else:
+            accountsCount = 'accounts: {} ({})'.format(data['accountsCount'], diff)
 
     last_statistics['linksCount'] = data['linksCount']
     last_statistics['cidsCount'] = data['cidsCount']
