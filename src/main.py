@@ -9,7 +9,7 @@ from library import get_prices, get_statistics, get_scramble, get_date
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 coins = ['btc', 'eth', 'xmr', 'dot', 'grin', 'ksm']
 last_message = {'cyber_russian_community': 0, 'fuckgoogle': 0}
-last_statistics = {'linksCount': 0, 'cidsCount': 0, 'accountsCount': 0,}
+last_statistics = {'linksCount': 0, 'particles': 0, 'accountsCount': 0,}
 
 
 def delete_message(message):
@@ -25,7 +25,7 @@ def print_statistics():
     data = get_statistics()
 
     linksCount = ''
-    cidsCount = ''
+    particles = ''
     accountsCount = ''
 
     if last_statistics['linksCount'] == 0:
@@ -37,14 +37,14 @@ def print_statistics():
         else:
             linksCount = 'cyberlinks: {} ({})'.format(data['linksCount'], diff)
 
-    if last_statistics['cidsCount'] == 0:
-        cidsCount = 'content ids: {}'.format(data['cidsCount'])
+    if last_statistics['particles'] == 0:
+        particles = 'particles: {}'.format(data['particles'])
     else:
-        diff = int(data['cidsCount']) - int(last_statistics['cidsCount'])
+        diff = int(data['particles']) - int(last_statistics['particles'])
         if diff > 0:
-            cidsCount = 'content ids: {} (+{})'.format(data['cidsCount'], diff)
+            particles = 'particles: {} (+{})'.format(data['particles'], diff)
         else:
-            cidsCount = 'content ids: {} ({})'.format(data['cidsCount'], diff)
+            particles = 'particles: {} ({})'.format(data['particles'], diff)
 
     if last_statistics['accountsCount'] == 0:
         accountsCount = 'accounts: {}'.format(data['accountsCount'])
@@ -56,10 +56,10 @@ def print_statistics():
             accountsCount = 'accounts: {} ({})'.format(data['accountsCount'], diff)
 
     last_statistics['linksCount'] = data['linksCount']
-    last_statistics['cidsCount'] = data['cidsCount']
+    last_statistics['particles'] = data['particles']
     last_statistics['accountsCount'] = data['accountsCount']
 
-    text = '`statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, cidsCount, accountsCount)
+    text = '`statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, particles, accountsCount)
 
     bot.send_message('@cyber_russian_community', text, parse_mode='Markdown')
     bot.send_message('@fuckgoogle', text, parse_mode='Markdown')
@@ -100,10 +100,10 @@ def statistics(message):
     data = get_statistics()
 
     linksCount = 'cyberlinks: {}'.format(data['linksCount'])
-    cidsCount = 'content ids: {}'.format(data['cidsCount'])
+    particles = 'particles: {}'.format(data['particles'])
     accountsCount = 'accounts: {}'.format(data['accountsCount'])
 
-    text = '`statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, cidsCount, accountsCount)
+    text = '`statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, particles, accountsCount)
 
     bot.send_message(message.chat.id, text, parse_mode='Markdown')
 
