@@ -26,7 +26,7 @@ def get_statistics():
     r = requests.get('https://api.cyber.cybernode.ai/index_stats')
     data = {}
     data['linksCount'] = r.json()['result']['linksCount']
-    data['cidsCount'] = r.json()['result']['cidsCount']
+    data['particles'] = r.json()['result']['cidsCount']
     data['accountsCount'] = r.json()['result']['accountsCount']
     return data
 
