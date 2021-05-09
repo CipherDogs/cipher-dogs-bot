@@ -59,7 +59,7 @@ def print_statistics():
     last_statistics['particles'] = data['particles']
     last_statistics['accountsCount'] = data['accountsCount']
 
-    text = '`statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, particles, accountsCount)
+    text = '`cyber statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, particles, accountsCount)
 
     bot.send_message('@cyber_russian_community', text, parse_mode='Markdown')
     bot.send_message('@fuckgoogle', text, parse_mode='Markdown')
@@ -95,7 +95,7 @@ def scramble(message):
     bot.send_message(message.chat.id, get_scramble())
 
 
-@bot.message_handler(commands=['statistics'])
+@bot.message_handler(commands=['cyber_statistics'])
 def statistics(message):
     data = get_statistics()
 
@@ -103,7 +103,7 @@ def statistics(message):
     particles = 'particles: {}'.format(data['particles'])
     accountsCount = 'accounts: {}'.format(data['accountsCount'])
 
-    text = '`statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, particles, accountsCount)
+    text = '`cyber statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, particles, accountsCount)
 
     bot.send_message(message.chat.id, text, parse_mode='Markdown')
 
