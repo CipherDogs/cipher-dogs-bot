@@ -8,3 +8,11 @@ install:
 restart:
 	systemctl stop bot.service
 	systemctl start bot.service
+
+.PHONY: status
+status:
+	systemctl status bot.service
+
+.PHONY: stop
+status:
+	systemctl stop bot.service
