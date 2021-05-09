@@ -14,5 +14,5 @@ status:
 	systemctl status bot.service
 
 .PHONY: stop
-status:
+stop:
 	systemctl stop bot.service
