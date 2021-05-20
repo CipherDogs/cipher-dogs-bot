@@ -22,7 +22,7 @@ def get_date():
 
 
 def get_statistics():
-    r = requests.get('https://api.cyber.cybernode.ai/index_stats')
+    r = requests.get('https://rpc.euler-6.cybernode.ai/index_stats')
     data = {}
     data['linksCount'] = r.json()['result']['linksCount']
     data['particles'] = r.json()['result']['cidsCount']
