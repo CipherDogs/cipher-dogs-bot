@@ -7,7 +7,7 @@ import time
 from library import get_prices, get_statistics, get_scramble, get_date
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
-coins = ['btc', 'eth', 'xmr', 'dot', 'grin', 'ksm']
+coins = ["bitcoin", "ethereum", "monero", "polkadot", "kusama", "uniswap", "wownero", "kulupu", "dogecoin"]
 last_message = {'cyber_russian_community': 0, 'fuckgoogle': 0}
 last_statistics = {'linksCount': 0, 'particles': 0, 'accountsCount': 0,}
 

@@ -4,17 +4,16 @@ import random
 
 
 def get_prices(arr):
-    string = ''
+    string = ""
+    separator = ","
+    src = "https://api.coingecko.com/api/v3/simple/price?ids=" + separator.join(arr) + "&vs_currencies=usd"
+    r = requests.get(src)
+    data = r.json()
     for i in range(len(arr)):
-        try:
-            r = requests.get('https://api.bitfinex.com/v1/pubticker/'+ arr[i] +'usd')
-            data = r.json()
-            price = data['ask']
-            string_coin = arr[i]
-            string = string + string_coin.upper() + ': ' + price + '$' + '\n'
-        except:
-            print('Error')
-    return string
+        price = data[arr[i]]["usd"]
+        string_coin = arr[i]
+        string = string + string_coin.title() + ": " + price + "$" + "\n"
+    return string 
 
 
 def get_date():
