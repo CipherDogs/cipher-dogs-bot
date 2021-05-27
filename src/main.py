@@ -90,6 +90,11 @@ def price_coins(message):
     bot.send_message(message.chat.id, get_prices(coins))
 
 
+@bot.message_handler(commands=['help'])
+def help(message):
+    bot.send_message(message.chat.id, "Possible commands:\n`/price` - displays the price of coins\n`/cyber_statistics` - displays cyber statistics")
+
+
 @bot.message_handler(commands=['scramble'])
 def scramble(message):
     bot.send_message(message.chat.id, get_scramble())
