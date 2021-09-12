@@ -29,6 +29,7 @@ def get_statistics():
     data['accountsCount'] = r.json()['result']['accountsCount']
     return data
 
+
 def get_scramble():
     scramble_length = random.randint(25, 28)
     moves = ["R", "R'", "R2", "L", "L'", "L2", "U", "U'", "U2", "D", "D'", "D2", "F", "F'", "F2", "B", "B'", "B2"]
