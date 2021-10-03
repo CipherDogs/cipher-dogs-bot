@@ -13,7 +13,7 @@ def get_prices(arr):
         price = data[arr[i]]["usd"]
         string_coin = arr[i]
         string += string_coin.title() + ": " + str(price) + "$" + "\n"
-    return string 
+    return string
 
 
 def get_date():
