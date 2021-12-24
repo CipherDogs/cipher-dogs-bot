@@ -92,7 +92,7 @@ def price_coins(message):
 
 @bot.message_handler(commands=['help'])
 def help(message):
-    bot.send_message(message.chat.id, "Possible commands:\n/price - displays the price of coins\n/cyber_statistics - displays cyber statistics\n/scramble - displays formula for the rubik's cube")
+    bot.send_message(message.chat.id, "Possible commands:\n/price - displays the price of coins\n/scramble - displays formula for the rubik's cube")
 
 
 @bot.message_handler(commands=['scramble'])
@@ -100,17 +100,17 @@ def scramble(message):
     bot.send_message(message.chat.id, get_scramble())
 
 
-@bot.message_handler(commands=['cyber_statistics'])
-def statistics(message):
-    data = get_statistics()
+# @bot.message_handler(commands=['cyber_statistics'])
+# def statistics(message):
+#     data = get_statistics()
 
-    linksCount = 'cyberlinks: {}'.format(data['linksCount'])
-    particles = 'particles: {}'.format(data['particles'])
-    accountsCount = 'accounts: {}'.format(data['accountsCount'])
+#     linksCount = 'cyberlinks: {}'.format(data['linksCount'])
+#     particles = 'particles: {}'.format(data['particles'])
+#     accountsCount = 'accounts: {}'.format(data['accountsCount'])
 
-    text = '`cyber statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, particles, accountsCount)
+#     text = '`cyber statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, particles, accountsCount)
 
-    bot.send_message(message.chat.id, text, parse_mode='Markdown')
+#     bot.send_message(message.chat.id, text, parse_mode='Markdown')
 
 
 def run_func():
