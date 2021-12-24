@@ -7,9 +7,9 @@ import time
 from library import get_prices, get_statistics, get_scramble, get_date
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
-coins = ["bitcoin", "ethereum", "monero", "polkadot", "kusama", "uniswap", "wownero", "kulupu", "dogecoin"]
+coins = ["bitcoin", "ethereum", "polkadot", "kusama", "cosmos", "osmosis", "monero", "wownero", "kulupu"]
 last_message = {'cyber_russian_community': 0, 'fuckgoogle': 0}
-last_statistics = {'linksCount': 0, 'particles': 0, 'accountsCount': 0}
+last_statistics = {'height': 0, 'cyberlinks': 0, 'particles': 0}
 
 
 def delete_message(message):
@@ -24,18 +24,23 @@ def delete_message(message):
 def print_statistics():
     data = get_statistics()
 
-    linksCount = ''
+    height = ''
+    cyberlinks = ''
     particles = ''
-    accountsCount = ''
 
-    if last_statistics['linksCount'] == 0:
-        linksCount = 'cyberlinks: {}'.format(data['linksCount'])
+    if last_statistics['height'] == 0:
+        height = 'height: {}'.format(data['height'])
     else:
-        diff = int(data['linksCount']) - int(last_statistics['linksCount'])
+        height = 'height: {}'.format(last_statistics['height'])
+
+    if last_statistics['cyberlinks'] == 0:
+        cyberlinks = 'cyberlinks: {}'.format(data['cyberlinks'])
+    else:
+        diff = int(data['cyberlinks']) - int(last_statistics['cyberlinks'])
         if diff > 0:
-            linksCount = 'cyberlinks: {} (+{})'.format(data['linksCount'], diff)
+            cyberlinks = 'cyberlinks: {} (+{})'.format(data['cyberlinks'], diff)
         else:
-            linksCount = 'cyberlinks: {} ({})'.format(data['linksCount'], diff)
+            cyberlinks = 'cyberlinks: {} ({})'.format(data['cyberlinks'], diff)
 
     if last_statistics['particles'] == 0:
         particles = 'particles: {}'.format(data['particles'])
@@ -46,20 +51,11 @@ def print_statistics():
         else:
             particles = 'particles: {} ({})'.format(data['particles'], diff)
 
-    if last_statistics['accountsCount'] == 0:
-        accountsCount = 'accounts: {}'.format(data['accountsCount'])
-    else:
-        diff = int(data['accountsCount']) - int(last_statistics['accountsCount'])
-        if diff > 0:
-            accountsCount = 'accounts: {} (+{})'.format(data['accountsCount'], diff)
-        else:
-            accountsCount = 'accounts: {} ({})'.format(data['accountsCount'], diff)
-
-    last_statistics['linksCount'] = data['linksCount']
+    last_statistics['height'] = data['height']
+    last_statistics['cyberlinks'] = data['cyberlinks']
     last_statistics['particles'] = data['particles']
-    last_statistics['accountsCount'] = data['accountsCount']
 
-    text = '`cyber statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, particles, accountsCount)
+    text = '`cyber statistics {}\n{}\n{}\n{}`'.format(get_date(), height, cyberlinks, particles)
 
     bot.send_message('@cyber_russian_community', text, parse_mode='Markdown')
     bot.send_message('@fuckgoogle', text, parse_mode='Markdown')
@@ -100,17 +96,17 @@ def scramble(message):
     bot.send_message(message.chat.id, get_scramble())
 
 
-# @bot.message_handler(commands=['cyber_statistics'])
-# def statistics(message):
-#     data = get_statistics()
+@bot.message_handler(commands=['cyber_statistics'])
+def statistics(message):
+    data = get_statistics()
 
-#     linksCount = 'cyberlinks: {}'.format(data['linksCount'])
-#     particles = 'particles: {}'.format(data['particles'])
-#     accountsCount = 'accounts: {}'.format(data['accountsCount'])
+    height = 'height: {}'.format(data['height'])
+    cyberlinks = 'cyberlinks: {}'.format(data['cyberlinks'])
+    particles = 'particles: {}'.format(data['particles'])
 
-#     text = '`cyber statistics {}\n{}\n{}\n{}`'.format(get_date(), linksCount, particles, accountsCount)
+    text = '`cyber statistics {}\n{}\n{}\n{}`'.format(get_date(), height, cyberlinks, particles)
 
-#     bot.send_message(message.chat.id, text, parse_mode='Markdown')
+    bot.send_message(message.chat.id, text, parse_mode='Markdown')
 
 
 def run_func():

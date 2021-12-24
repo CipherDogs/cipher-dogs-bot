@@ -22,11 +22,11 @@ def get_date():
 
 
 def get_statistics():
-    r = requests.get('https://rpc.euler-6.cybernode.ai/index_stats')
+    r = requests.get('https://lcd.bostrom.cybernode.ai/graph/graph_stats')
     data = {}
-    data['linksCount'] = r.json()['result']['linksCount']
-    data['particles'] = r.json()['result']['cidsCount']
-    data['accountsCount'] = r.json()['result']['accountsCount']
+    data['height'] = r.json()['height']
+    data['cyberlinks'] = r.json()['result']['cyberlinks']
+    data['particles'] = r.json()['result']['particles']
     return data
 
 
