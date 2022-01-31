@@ -42,3 +42,9 @@ def get_scramble():
         scramble += " " + moves[random_move]
         prev_move = moves[random_move]
     return scramble.strip()
+
+
+def celebration():
+    today = datetime.date.today()
+    if today.day == 31 and today.month == 1:
+        bot.send_message("@tesbot31337", "Happy Birthday Python!")
