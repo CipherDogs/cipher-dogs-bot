@@ -3,6 +3,7 @@ import requests
 import schedule
 import telebot
 import threading
+import datetime
 import time
 from library import get_prices, get_statistics, get_scramble, get_date, celebration
 
@@ -10,6 +11,12 @@ bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 coins = ["bitcoin", "ethereum", "polkadot", "kusama", "cosmos", "osmosis", "monero", "wownero", "kulupu"]
 last_message = {'cyber_russian_community': 0, 'fuckgoogle': 0}
 last_statistics = {'height': 0, 'cyberlinks': 0, 'particles': 0}
+
+
+def celebration():
+    today = datetime.date.today()
+    if today.day == 31 and today.month == 1:
+        bot.send_message("@tesbot31337", "Happy Birthday Python!")
 
 
 def delete_message(message):
@@ -120,7 +127,7 @@ def run_func():
 th = threading.Thread(target=run_func, args=())
 th.start()
 
-th2 = threading.Thread(target=celebration(), args=(bot))
+th2 = threading.Thread(target=celebration(), args=())
 th2.start()
 
 
