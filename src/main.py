@@ -12,6 +12,12 @@ last_message = {'cyber_russian_community': 0, 'fuckgoogle': 0}
 last_statistics = {'height': 0, 'cyberlinks': 0, 'particles': 0}
 
 
+def celebration():
+    today = datetime.date.today()
+    if today.day == 31 and today.month == 1:
+        bot.send_message("@tesbot31337", "Happy Birthday Python!")
+
+
 def delete_message(message):
     try:
         if last_message[message.chat.username] != 0:
@@ -119,6 +125,9 @@ def run_func():
 
 th = threading.Thread(target=run_func, args=())
 th.start()
+
+th2 = threading.Thread(target=celebration(), args=())
+th2.start()
 
 
 def telegram_polling():
