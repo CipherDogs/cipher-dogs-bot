@@ -14,9 +14,19 @@ last_statistics = {'height': 0, 'cyberlinks': 0, 'particles': 0}
 
 
 def celebration():
-    today = datetime.date.today()
-    if today.day == 31 and today.month == 1:
-        bot.send_message("@tesbot31337", "Happy Birthday Python!")
+    while True:
+        today = datetime.date.today()
+        days = int(format(today, '%j'))
+        if today.day == 31 and today.month == 1:
+            bot.send_message("@tesbot31337", "Happy Birthday Python!")
+        elif today.day == 26 and today.month == 7:
+            bot.send_message("@tesbot31337", "Happy Birthday Rust!")
+        elif today.day == 25 and today.month == 8:
+            bot.send_message("@tesbot31337", "Happy Birthday Linux!")
+        elif today.day == 27 and today.month == 9:
+            bot.send_message("@tesbot31337", "Happy Birthday GNU!")
+        elif days == 256:
+            bot.send_message("@tesbot31337", "Programmer's Day!")
 
 
 def delete_message(message):
