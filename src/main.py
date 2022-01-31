@@ -14,19 +14,18 @@ last_statistics = {'height': 0, 'cyberlinks': 0, 'particles': 0}
 
 
 def celebration():
-    while True:
-        today = datetime.date.today()
-        days = int(format(today, '%j'))
-        if today.day == 31 and today.month == 1:
-            bot.send_message("@tesbot31337", "Happy Birthday Python!")
-        elif today.day == 26 and today.month == 7:
-            bot.send_message("@tesbot31337", "Happy Birthday Rust!")
-        elif today.day == 25 and today.month == 8:
-            bot.send_message("@tesbot31337", "Happy Birthday Linux!")
-        elif today.day == 27 and today.month == 9:
-            bot.send_message("@tesbot31337", "Happy Birthday GNU!")
-        elif days == 256:
-            bot.send_message("@tesbot31337", "Programmer's Day!")
+    today = datetime.date.today()
+    days = int(format(today, '%j'))
+    if today.day == 31 and today.month == 1:
+        bot.send_message("@tesbot31337", "Happy Birthday Python!")
+    elif today.day == 26 and today.month == 7:
+        bot.send_message("@tesbot31337", "Happy Birthday Rust!")
+    elif today.day == 25 and today.month == 8:
+        bot.send_message("@tesbot31337", "Happy Birthday Linux!")
+    elif today.day == 27 and today.month == 9:
+        bot.send_message("@tesbot31337", "Happy Birthday GNU!")
+    elif days == 256:
+        bot.send_message("@tesbot31337", "Programmer's Day!")
 
 
 def delete_message(message):
@@ -133,11 +132,18 @@ def run_func():
         schedule.run_pending()
         time.sleep(1)
 
+def run_func2():
+    schedule.every().day.do(celebration)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
 
 th = threading.Thread(target=run_func, args=())
 th.start()
 
-th2 = threading.Thread(target=celebration(), args=())
+th2 = threading.Thread(target=run_func2, args=())
 th2.start()
 
 
