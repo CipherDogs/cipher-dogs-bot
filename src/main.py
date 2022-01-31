@@ -120,7 +120,7 @@ def run_func():
 th = threading.Thread(target=run_func, args=())
 th.start()
 
-th2 = threading.Thread(target=celebration(), args=())
+th2 = threading.Thread(target=celebration(), args=(bot))
 th2.start()
 
 

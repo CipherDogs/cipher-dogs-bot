@@ -2,7 +2,6 @@ import requests
 import datetime
 import random
 
-
 def get_prices(arr):
     string = ""
     separator = ","
@@ -44,7 +43,7 @@ def get_scramble():
     return scramble.strip()
 
 
-def celebration():
+def celebration(bot):
     today = datetime.date.today()
     if today.day == 31 and today.month == 1:
         bot.send_message("@tesbot31337", "Happy Birthday Python!")
