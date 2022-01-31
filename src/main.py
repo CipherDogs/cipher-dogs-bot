@@ -5,7 +5,7 @@ import telebot
 import threading
 import datetime
 import time
-from library import get_prices, get_statistics, get_scramble, get_date, celebration
+from library import get_prices, get_statistics, get_scramble, get_date
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 coins = ["bitcoin", "ethereum", "polkadot", "kusama", "cosmos", "osmosis", "monero", "wownero", "kulupu"]
