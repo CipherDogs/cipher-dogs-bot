@@ -127,12 +127,6 @@ def statistics(message):
 
 def run_func():
     schedule.every().day.at("16:00").do(print_statistics)
-
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
-
-def run_func2():
     schedule.every().day.do(celebration)
 
     while True:
@@ -142,9 +136,6 @@ def run_func2():
 
 th = threading.Thread(target=run_func, args=())
 th.start()
-
-th2 = threading.Thread(target=run_func2, args=())
-th2.start()
 
 
 def telegram_polling():
