@@ -127,7 +127,7 @@ def statistics(message):
 
 @bot.message_handler(commands=['weather'])
 def weather(message):
-    bot.send_message(message.chat.id, get_weather(message.text))
+    bot.send_message(message.chat.id, get_weather(message.text[9:]))
 
 
 def run_func():
