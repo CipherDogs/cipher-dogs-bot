@@ -14,8 +14,7 @@ last_statistics = {'height': 0, 'cyberlinks': 0, 'particles': 0}
 
 
 def weather(text):
-    city = text[9:]
-    weather = get_weather(city)
+    weather = get_weather(text)
     return weather
 
 
@@ -133,6 +132,7 @@ def statistics(message):
 
 @bot.message_handler(commands=['weather'])
 def welcome(message):
+    bot.send_message(message.chat.id, "City:")
     bot.send_message(message.chat.id, weather(message.text))
 
 
