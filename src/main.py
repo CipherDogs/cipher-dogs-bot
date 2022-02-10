@@ -15,7 +15,8 @@ last_statistics = {'height': 0, 'cyberlinks': 0, 'particles': 0}
 
 def weather(text):
     city = text[9:]
-    return get_weather(city)
+    weather = get_weather(city)
+    return weather
 
 
 def celebration():
