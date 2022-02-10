@@ -13,11 +13,6 @@ last_message = {'cyber_russian_community': 0, 'fuckgoogle': 0}
 last_statistics = {'height': 0, 'cyberlinks': 0, 'particles': 0}
 
 
-def weather(text):
-    weather = get_weather(text)
-    return weather
-
-
 def celebration():
     today = datetime.date.today()
     days = int(format(today, '%j'))
@@ -131,9 +126,8 @@ def statistics(message):
 
 
 @bot.message_handler(commands=['weather'])
-def welcome(message):
-    bot.send_message(message.chat.id, "City:")
-    bot.send_message(message.chat.id, weather(message.text))
+def weather(message):
+    bot.send_message(message.chat.id, get_weather(message.text))
 
 
 def run_func():
