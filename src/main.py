@@ -5,12 +5,17 @@ import telebot
 import threading
 import datetime
 import time
-from library import get_prices, get_statistics, get_scramble, get_date
+from library import get_prices, get_statistics, get_scramble, get_date, get_weather
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 coins = ["bitcoin", "ethereum", "polkadot", "kusama", "cosmos", "osmosis", "monero", "wownero", "kulupu"]
 last_message = {'cyber_russian_community': 0, 'fuckgoogle': 0}
 last_statistics = {'height': 0, 'cyberlinks': 0, 'particles': 0}
+
+
+def weather(text):
+    city = text[9:]
+    return get_weather(city)
 
 
 def celebration():
@@ -123,6 +128,11 @@ def statistics(message):
     text = '`cyber statistics {}\n{}\n{}\n{}`'.format(get_date(), height, cyberlinks, particles)
 
     bot.send_message(message.chat.id, text, parse_mode='Markdown')
+
+
+@bot.message_handler(commands=['weather'])
+def welcome(message):
+    bot.send_message(message.chat.id, weather(message.text))
 
 
 def run_func():
