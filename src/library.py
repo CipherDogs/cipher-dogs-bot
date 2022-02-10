@@ -44,11 +44,12 @@ def get_scramble():
 
 
 def get_weather(city):
-    r = requests.get("https://api.openweathermap.org/geo/1.0/direct?q={}&limit=5&appid=".format(city))
+    appid = ""
+    r = requests.get("https://api.openweathermap.org/geo/1.0/direct?q={}&limit=5&appid={}".format(city, appid))
     data = r.json()
     lat = round(data[0]["lat"])
     lon = round(data[0]["lon"])
-    q = requests.get("https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid=".format(lat, lon))
+    q = requests.get("https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid={}".format(lat, lon, appid))
     data = q.json()
     main = data["weather"][0]["description"]
     temp = data["main"]["temp"]
@@ -58,4 +59,4 @@ def get_weather(city):
     temp = str(round(temp - 273.15)) + '°C'
     wind = str(round(wind)) + ' m/s'
     humidity = str(humidity) + '%'
-    return "Weather:\nMain: {}\nTemp: {}\nWind: {}\nHumidity: {}".format(main, temp, wind, humidity)
+    return "Main: {}\nTemp: {}\nWind: {}\nHumidity: {}".format(main, temp, wind, humidity)
