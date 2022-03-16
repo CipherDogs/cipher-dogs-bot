@@ -12,7 +12,7 @@ def get_prices(arr):
     for i in range(len(arr)):
         price = data[arr[i]]["usd"]
         string_coin = arr[i]
-        string += string_coin.title() + "\t\t" + str(price) + "$" + "\n"
+        string += string_coin.title() + " : " + str(price) + "$" + "\n"
     return string
 
 
