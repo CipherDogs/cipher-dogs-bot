@@ -8,7 +8,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=root
-Environment=TOKEN=token
+Environment=TOKEN=token APPID=appid
 ExecStart=/usr/bin/python3 /root/cipher-dogs-bot/src/main.py
 
 [Install]
