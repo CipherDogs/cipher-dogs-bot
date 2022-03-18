@@ -5,7 +5,7 @@ import telebot
 import threading
 import datetime
 import time
-from library import get_prices, get_statistics, get_scramble, get_date, get_weather
+from library import get_prices, get_statistics, get_scramble, get_date, get_weather, getwiki, getcont
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 coins = ["bitcoin", "ethereum", "polkadot", "kusama", "cosmos", "osmosis", "monero", "wownero", "kulupu"]
@@ -130,7 +130,18 @@ def weather(message):
     bot.send_message(message.chat.id, get_weather(message.text[9:], appid=os.getenv('APPID')))
 
 
+@bot.message_handler(commands=["find"])
+def handle_page(message):
+    bot.send_message(message.chat.id, getwiki(message.text))
+
+
+@bot.message_handler(commands=["content"])
+def handle_cont(message):
+    bot.send_message(message.chat.id, getcont(message.text))
+
+
 def run_func():
+    schedule.every().day.at("16:00").do(get_prices, arr=coins)
     schedule.every().day.at("16:00").do(print_statistics)
     schedule.every().day.do(celebration)
 

@@ -12,7 +12,7 @@ def get_prices(arr):
     for i in range(len(arr)):
         price = data[arr[i]]["usd"]
         string_coin = arr[i]
-        string += string_coin.title() + "\t\t" + str(price) + "$" + "\n"
+        string += string_coin.title() + " " + str(price) + "$" + "\n"
     return string
 
 
@@ -60,3 +60,27 @@ def get_weather(city, appid):
     wind = str(round(wind)) + ' m/s'
     humidity = str(humidity) + '%'
     return "Main: {}\nTemp: {}\nWind: {}\nHumidity: {}".format(main, temp, wind, humidity)
+
+
+def getwiki(text):
+    try:
+        wikipedia.set_lang("ru")
+        ny = wikipedia.page(text[6:])
+        return ny.url
+    except Exception as e:
+        try:
+            wikipedia.set_lang("eu")
+            ny = wikipedia.page(text[6:])
+            return ny.url
+        except Exception as e:
+            return "Article not found!"
+
+
+def getcont(text):
+    try:
+        wikipedia.set_lang("ru")
+        ny = wikipedia.page(text[9:])
+        string = ny.content
+        return string[:string.find("\n")]
+    except Exception as e:
+        return "Content not found!"
