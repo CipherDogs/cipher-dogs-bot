@@ -104,7 +104,7 @@ def price_coins(message):
 
 @bot.message_handler(commands=['help'])
 def help(message):
-    bot.send_message(message.chat.id, "Possible commands:\n/price - displays the price of coins\n/cyber_statistics - displays cyber statistics\n/scramble - displays formula for the rubik's cube")
+    bot.send_message(message.chat.id, "Possible commands:\n/price - displays the price of coins\n/cyber_statistics - displays cyber statistics\n/scramble - displays formula for the rubik's cube\n/find - find article in wikipedia")
 
 
 @bot.message_handler(commands=['scramble'])
