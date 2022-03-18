@@ -7,6 +7,7 @@ import datetime
 import time
 from library import get_prices, get_statistics, get_scramble, get_date, get_weather, getwiki, getcont
 
+
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 coins = ["bitcoin", "ethereum", "polkadot", "kusama", "cosmos", "osmosis", "monero", "wownero", "kulupu"]
 last_message = {'cyber_russian_community': 0, 'fuckgoogle': 0}
@@ -35,6 +36,10 @@ def delete_message(message):
         last_message[message.chat.username] = message.message_id + 1
     except:
         last_message[message.chat.username] = 0
+
+
+def print_coins(arr):
+    bot.send_message('@test31337', get_prices(arr), parse_mode='Markdown')
 
 
 def print_statistics():
@@ -127,7 +132,7 @@ def statistics(message):
 
 @bot.message_handler(commands=['weather'])
 def weather(message):
-    bot.send_message(message.chat.id, get_weather(message.text[9:], appid=os.getenv('APPID')))
+    bot.send_message(message.chat.id, get_weather(message.text, appid=os.getenv('APPID')))
 
 
 @bot.message_handler(commands=["find"])
@@ -141,7 +146,7 @@ def handle_cont(message):
 
 
 def run_func():
-    schedule.every().day.at("16:00").do(get_prices, arr=coins)
+    schedule.every().day.at("16:00").do(print_coins, coins)
     schedule.every().day.at("16:00").do(print_statistics)
     schedule.every().day.do(celebration)
 
