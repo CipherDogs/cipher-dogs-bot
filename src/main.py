@@ -39,7 +39,7 @@ def delete_message(message):
 
 
 def print_coins(arr):
-    bot.send_message('@test31337', get_prices(arr), parse_mode='Markdown')
+    bot.send_message('@tesbot31337', get_prices(arr), parse_mode='Markdown')
 
 
 def print_statistics():
@@ -117,19 +117,6 @@ def scramble(message):
     bot.send_message(message.chat.id, get_scramble())
 
 
-@bot.message_handler(commands=['cyber_statistics'])
-def statistics(message):
-    data = get_statistics()
-
-    height = 'height: {}'.format(data['height'])
-    cyberlinks = 'cyberlinks: {}'.format(data['cyberlinks'])
-    particles = 'particles: {}'.format(data['particles'])
-
-    text = '`cyber statistics {}\n{}\n{}\n{}`'.format(get_date(), height, cyberlinks, particles)
-
-    bot.send_message(message.chat.id, text, parse_mode='Markdown')
-
-
 @bot.message_handler(commands=['weather'])
 def weather(message):
     bot.send_message(message.chat.id, get_weather(message.text, appid=os.getenv('APPID')))
@@ -145,8 +132,21 @@ def handle_cont(message):
     bot.send_message(message.chat.id, getcont(message.text))
 
 
+@bot.message_handler(commands=['cyber_statistics'])
+def statistics(message):
+    data = get_statistics()
+
+    height = 'height: {}'.format(data['height'])
+    cyberlinks = 'cyberlinks: {}'.format(data['cyberlinks'])
+    particles = 'particles: {}'.format(data['particles'])
+
+    text = '`cyber statistics {}\n{}\n{}\n{}`'.format(get_date(), height, cyberlinks, particles)
+
+    bot.send_message(message.chat.id, text, parse_mode='Markdown')
+
+
 def run_func():
-    schedule.every().day.at("16:00").do(print_coins, coins)
+    schedule.every().day.at("17:00").do(print_coins, coins)
     schedule.every().day.at("16:00").do(print_statistics)
     schedule.every().day.do(celebration)
 
