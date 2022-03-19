@@ -146,7 +146,7 @@ def statistics(message):
 
 
 def run_func():
-    schedule.every().day.at("17:00").do(print_coins, coins)
+    schedule.every().day.at("16:00").do(print_coins, coins)
     schedule.every().day.at("16:00").do(print_statistics)
     schedule.every().day.do(celebration)
 
