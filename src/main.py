@@ -1,10 +1,9 @@
 import os
-import requests
-import schedule
-import telebot
-import threading
-import datetime
 import time
+import telebot
+import schedule
+import datetime
+import threading
 from library import get_prices, get_statistics, get_scramble, get_date, get_weather, getwiki, getcont
 
 

@@ -1,7 +1,7 @@
-import wikipedia
+import random
 import requests
 import datetime
-import random
+import wikipedia
 
 
 def get_prices(arr):
@@ -46,7 +46,7 @@ def get_scramble():
 
 
 def get_weather(city, appid):
-    cite = city[9:]
+    city = city[9:]
     r = requests.get("https://api.openweathermap.org/geo/1.0/direct?q={}&limit=5&appid={}".format(city, appid))
     data = r.json()
     lat = round(data[0]["lat"])
