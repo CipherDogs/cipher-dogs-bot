@@ -64,7 +64,7 @@ def get_weather(city, appid):
     return "Main: {}\nTemp: {}\nWind: {}\nHumidity: {}".format(main, temp, wind, humidity)
 
 
-def getwiki(text):
+def get_wiki(text):
     try:
         wikipedia.set_lang("ru")
         ny = wikipedia.page(text[6:])
@@ -78,7 +78,7 @@ def getwiki(text):
             return "Article not found!"
 
 
-def getcont(text):
+def get_cont(text):
     try:
         wikipedia.set_lang("ru")
         ny = wikipedia.page(text[9:])
@@ -86,3 +86,18 @@ def getcont(text):
         return string[:string.find("\n")]
     except Exception as e:
         return "Content not found!"
+
+
+def get_celebration():
+    today = datetime.date.today()
+    days = int(format(today, '%j'))
+    if today.day == 31 and today.month == 1:
+        return "Happy Birthday Python!"
+    elif today.day == 26 and today.month == 7:
+        return "Happy Birthday Rust!"
+    elif today.day == 25 and today.month == 8:
+        return "Happy Birthday Linux!"
+    elif today.day == 27 and today.month == 9:
+        return "Happy Birthday GNU!"
+    elif days == 256:
+        return "Programmer's Day!"

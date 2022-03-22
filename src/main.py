@@ -2,30 +2,22 @@ import os
 import time
 import telebot
 import schedule
-import datetime
 import threading
-from library import get_prices, get_statistics, get_scramble, get_date, get_weather, getwiki, getcont
+from library import *
 
 
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
-coins = ["bitcoin", "ethereum", "polkadot", "kusama", "cosmos", "osmosis", "monero", "wownero", "kulupu"]
 last_message = {'cyber_russian_community': 0, 'fuckgoogle': 0}
 last_statistics = {'height': 0, 'cyberlinks': 0, 'particles': 0}
+coins = ["bitcoin", "ethereum", "polkadot", "kusama", "cosmos", "osmosis", "monero", "wownero", "kulupu"]
 
 
-def celebration():
-    today = datetime.date.today()
-    days = int(format(today, '%j'))
-    if today.day == 31 and today.month == 1:
-        bot.send_message("@tesbot31337", "Happy Birthday Python!")
-    elif today.day == 26 and today.month == 7:
-        bot.send_message("@tesbot31337", "Happy Birthday Rust!")
-    elif today.day == 25 and today.month == 8:
-        bot.send_message("@tesbot31337", "Happy Birthday Linux!")
-    elif today.day == 27 and today.month == 9:
-        bot.send_message("@tesbot31337", "Happy Birthday GNU!")
-    elif days == 256:
-        bot.send_message("@tesbot31337", "Programmer's Day!")
+def print_celebration():
+    bot.send_message('@tesbot31337', get_celebration())
+
+
+# def print_coins(arr):
+#     bot.send_message('@tesbot31337', get_prices(arr))
 
 
 def delete_message(message):
@@ -35,10 +27,6 @@ def delete_message(message):
         last_message[message.chat.username] = message.message_id + 1
     except:
         last_message[message.chat.username] = 0
-
-
-def print_coins(arr):
-    bot.send_message('@tesbot31337', get_prices(arr), parse_mode='Markdown')
 
 
 def print_statistics():
@@ -80,6 +68,7 @@ def print_statistics():
     bot.send_message('@cyber_russian_community', text, parse_mode='Markdown')
     bot.send_message('@fuckgoogle', text, parse_mode='Markdown')
 
+# ----- COMMANDS -----
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
@@ -123,12 +112,12 @@ def weather(message):
 
 @bot.message_handler(commands=["find"])
 def handle_page(message):
-    bot.send_message(message.chat.id, getwiki(message.text))
+    bot.send_message(message.chat.id, get_wiki(message.text))
 
 
 @bot.message_handler(commands=["content"])
 def handle_cont(message):
-    bot.send_message(message.chat.id, getcont(message.text))
+    bot.send_message(message.chat.id, get_cont(message.text))
 
 
 @bot.message_handler(commands=['cyber_statistics'])
@@ -145,9 +134,9 @@ def statistics(message):
 
 
 def run_func():
-    schedule.every().day.at("16:00").do(print_coins, coins)
+    # schedule.every().day.at("16:00").do(print_coins, coins)
     schedule.every().day.at("16:00").do(print_statistics)
-    schedule.every().day.do(celebration)
+    schedule.every().day.do(print_celebration)
 
     while True:
         schedule.run_pending()
