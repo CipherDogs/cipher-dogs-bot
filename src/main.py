@@ -9,7 +9,11 @@ from library import *
 bot = telebot.TeleBot(token=os.getenv('TOKEN'))
 last_message = {'cyber_russian_community': 0, 'fuckgoogle': 0}
 last_statistics = {'height': 0, 'cyberlinks': 0, 'particles': 0}
-coins = ["bitcoin", "ethereum", "polkadot", "kusama", "cosmos", "osmosis", "monero", "wownero", "kulupu"]
+coins = ["bitcoin", "ethereum", "polkadot", 
+         "kusama", "cosmos", "osmosis", 
+         "monero", "wownero", "kulupu", 
+         "juno-network", "stargaze", "secret", 
+         "acala", "moonbeam", "phala-network"]
 
 
 def print_celebration():
@@ -25,6 +29,7 @@ def delete_message(message):
         if last_message[message.chat.username] != 0:
             bot.delete_message(message.chat.id, last_message[message.chat.username])
         last_message[message.chat.username] = message.message_id + 1
+    
     except:
         last_message[message.chat.username] = 0
 
@@ -38,24 +43,31 @@ def print_statistics():
 
     if last_statistics['height'] == 0:
         height = 'height: {}'.format(data['height'])
+    
     else:
         height = 'height: {}'.format(last_statistics['height'])
 
     if last_statistics['cyberlinks'] == 0:
         cyberlinks = 'cyberlinks: {}'.format(data['cyberlinks'])
+    
     else:
         diff = int(data['cyberlinks']) - int(last_statistics['cyberlinks'])
+        
         if diff > 0:
             cyberlinks = 'cyberlinks: {} (+{})'.format(data['cyberlinks'], diff)
+        
         else:
             cyberlinks = 'cyberlinks: {} ({})'.format(data['cyberlinks'], diff)
 
     if last_statistics['particles'] == 0:
         particles = 'particles: {}'.format(data['particles'])
+   
     else:
         diff = int(data['particles']) - int(last_statistics['particles'])
+        
         if diff > 0:
             particles = 'particles: {} (+{})'.format(data['particles'], diff)
+        
         else:
             particles = 'particles: {} ({})'.format(data['particles'], diff)
 
@@ -68,7 +80,6 @@ def print_statistics():
     bot.send_message('@cyber_russian_community', text, parse_mode='Markdown')
     bot.send_message('@fuckgoogle', text, parse_mode='Markdown')
 
-# ----- COMMANDS -----
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
@@ -150,6 +161,7 @@ th.start()
 def telegram_polling():
     try:
         bot.polling(none_stop=True, timeout=60)
+    
     except:
         bot.stop_polling()
         time.sleep(10)
