@@ -11,17 +11,17 @@ def get_prices(arr):
     src = "https://api.coingecko.com/api/v3/simple/price?ids=" + separator.join(arr) + "&vs_currencies=usd"
     r = requests.get(src)
     data = r.json()
-
+    
     for i, name in enumerate(arr):
         price = data[name]["usd"]
         coin = name
         
         if "-" in coin:
-            code = coin.replace("-", " ")
-            string += coin.title + " " + str(price) + "$" + "\n"
-
+            coin = coin.replace("-", " ")
+            string += coin.title() + " " + str(price) + "$" + "\n"
+            
         else:
-            string += coin.title + " " + str(price) + "$" + "\n"
+            string += coin.title() + " " + str(price) + "$" + "\n"
 
     
     return string
