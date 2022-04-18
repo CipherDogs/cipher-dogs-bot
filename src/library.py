@@ -13,7 +13,7 @@ def get_prices(arr):
     data = r.json()
 
     for i, name in enumerate(arr):
-        price = data[coin]["usd"]
+        price = data[name]["usd"]
         coin = name
         
         if "-" in coin:
