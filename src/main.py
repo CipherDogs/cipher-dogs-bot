@@ -13,7 +13,7 @@ coins = ["bitcoin", "ethereum", "polkadot",
          "kusama", "cosmos", "osmosis", 
          "monero", "wownero", "kulupu", 
          "juno-network", "stargaze", "secret", 
-         "acala", "moonbeam"]
+         "acala", "moonbeam", "phala-network"]
 
 
 def print_celebration():
