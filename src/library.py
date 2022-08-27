@@ -8,7 +8,7 @@ def get_prices(arr):
     string = ""
     separator = ","
     
-    src = "https://api.coingecko.com/api/v3/simple/price?ids=" + separator.join(arr) + "&vs_currencies=usd"
+    src = f"https://api.coingecko.com/api/v3/simple/price?ids={separator.join(arr)}&vs_currencies=usd"
     r = requests.get(src)
     data = r.json()
     
@@ -36,14 +36,18 @@ def get_date():
 
 
 def get_statistics():
-    r = requests.get('https://lcd.bostrom.cybernode.ai/graph/graph_stats')
-    data = {}
+    try:
+        r = requests.get('https://lcd.bostrom.cybernode.ai/graph/graph_stats')
+        data = {}
+        
+        data['height'] = r.json()['height']
+        data['cyberlinks'] = r.json()['result']['cyberlinks']
+        data['particles'] = r.json()['result']['particles']
+        
+        return data
     
-    data['height'] = r.json()['height']
-    data['cyberlinks'] = r.json()['result']['cyberlinks']
-    data['particles'] = r.json()['result']['particles']
-    
-    return data
+    except:
+        return {}
 
 
 def get_scramble():
@@ -66,23 +70,30 @@ def get_scramble():
 
 def get_weather(city, appid):
     city = city[9:]
-    r = requests.get("https://api.openweathermap.org/geo/1.0/direct?q={}&limit=5&appid={}".format(city, appid))
-    data = r.json()
-    lat = round(data[0]["lat"])
-    lon = round(data[0]["lon"])
     
-    q = requests.get("https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid={}".format(lat, lon, appid))
-    data = q.json()
-    main = data["weather"][0]["description"]
-    temp = data["main"]["temp"]
-    humidity = data ["main"]["humidity"]
-    wind = data["wind"]["speed"]
-    
-    main = main.title()
-    temp = str(round(temp - 273.15)) + '°C'
-    wind = str(round(wind)) + ' m/s'
-    humidity = str(humidity) + '%'
-    return "Main: {}\nTemp: {}\nWind: {}\nHumidity: {}".format(main, temp, wind, humidity)
+    try:
+        r = requests.get(f"https://api.openweathermap.org/geo/1.0/direct?q={city}&limit=5&appid={appid}")
+        data = r.json()
+        lat = round(data[0]["lat"])
+        lon = round(data[0]["lon"])
+
+    except:
+        return "Sorry, there is no such city."
+
+    else:
+        q = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={appid}")
+        data = q.json()
+        main = data["weather"][0]["description"]
+        temp = data["main"]["temp"]
+        humidity = data ["main"]["humidity"]
+        wind = data["wind"]["speed"]
+        
+        main = main.title()
+        temp = str(round(temp - 273.15)) + '°C'
+        wind = str(round(wind)) + ' m/s'
+        humidity = str(humidity) + '%'
+
+        return f"Main: {main}\nTemp: {temp}\nWind: {wind}\nHumidity: {humidity}"
 
 
 def get_wiki(text):
@@ -130,3 +141,6 @@ def get_celebration():
     
     elif days == 256:
         return "Programmer's Day!"
+    
+    else:
+        return "There is no holiday today."

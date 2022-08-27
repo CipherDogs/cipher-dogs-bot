@@ -16,12 +16,8 @@ coins = ["bitcoin", "ethereum", "polkadot",
          "acala", "moonbeam", "phala-network"]
 
 
-def print_celebration():
-    bot.send_message('@tesbot31337', get_celebration())
-
-
-# def print_coins(arr):
-#     bot.send_message('@tesbot31337', get_prices(arr))
+def print_celebration(message):
+    bot.send_message('@D34D_FR13ND5', get_celebration())
 
 
 def delete_message(message):
@@ -108,7 +104,7 @@ def price_coins(message):
 
 @bot.message_handler(commands=['help'])
 def help(message):
-    bot.send_message(message.chat.id, "Possible commands:\n/price - displays the price of coins\n/cyber_statistics - displays cyber statistics\n/scramble - displays formula for the rubik's cube\n/find - find article in wikipedia")
+    bot.send_message(message.chat.id, "Possible commands:\n/price - displays the price of coins\n/cyber_statistics - displays cyber statistics\n/find - find article in wikipedia")
 
 
 @bot.message_handler(commands=['scramble'])
