@@ -16,7 +16,7 @@ coins = ["bitcoin", "ethereum", "polkadot",
          "acala", "moonbeam", "phala-network"]
 
 
-def print_celebration(message):
+def print_celebration():
     bot.send_message('@D34D_FR13ND5', get_celebration())
 
 
