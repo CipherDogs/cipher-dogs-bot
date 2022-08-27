@@ -143,7 +143,7 @@ def statistics(message):
 def run_func():
     # schedule.every().day.at("16:00").do(print_coins, coins)
     schedule.every().day.at("16:00").do(print_statistics)
-    schedule.every().day.at('19:00').do(print_celebration)
+    schedule.every().day.at('19:03').do(print_celebration)
 
     while True:
         schedule.run_pending()
