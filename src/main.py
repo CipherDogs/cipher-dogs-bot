@@ -16,8 +16,8 @@ coins = ["bitcoin", "ethereum", "polkadot",
          "acala", "moonbeam", "phala-network"]
 
 
-def print_celebration():
-    bot.send_message('@D34D_FR13ND5', get_celebration())
+# def print_celebration():
+#     bot.send_message('@D34D_FR13ND5', get_celebration())
 
 
 def delete_message(message):
@@ -143,7 +143,7 @@ def statistics(message):
 def run_func():
     # schedule.every().day.at("16:00").do(print_coins, coins)
     schedule.every().day.at("16:00").do(print_statistics)
-    schedule.every().day.at('19:03').do(print_celebration)
+    # schedule.every().day.at('19:00').do(print_celebration)
 
     while True:
         schedule.run_pending()
