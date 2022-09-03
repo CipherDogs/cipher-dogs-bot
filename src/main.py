@@ -121,10 +121,10 @@ def help(message):
     bot.send_message(
         message.chat.id,
         """Possible commands:
-            /price - displays the price of coins
-            /cyber_statistics - displays cyber statistics
-            /find - find article in wikipedia
-        """
+    /price - displays the price of coins
+    /cyber_statistics - displays cyber statistics
+    find - find article in wikipedia
+    """
     )
 
 
