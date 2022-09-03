@@ -72,7 +72,7 @@ def print_statistics():
     last_statistics["particles"] = data["particles"]
 
     text = f"`cyber statistics {get_date()}\n \
-            {height}\n{cyberlinks}\n{particles}"
+{height}\n{cyberlinks}\n{particles}"
 
     bot.send_message("@cyber_russian_community", text, parse_mode="Markdown")
     bot.send_message("@fuckgoogle", text, parse_mode="Markdown")
@@ -83,8 +83,8 @@ def welcome(message):
     bot.send_message(
         message.chat.id,
         "CipherDogsBot\n \
-        Fuck Google! Fuck Twitter! Fuck Web2.0\n \
-        https://cipherdogs.net/"
+Fuck Google! Fuck Twitter! Fuck Web2.0\n \
+https://cipherdogs.net/"
     )
 
 
@@ -122,9 +122,9 @@ def help(message):
     bot.send_message(
         message.chat.id,
         "Possible commands:\n \
-        /price - displays the price of coins\n \
-        /cyber_statistics - displays cyber statistics\n \
-        /find - find article in wikipedia"
+/price - displays the price of coins\n \
+/cyber_statistics - displays cyber statistics\n \
+/find - find article in wikipedia"
     )
 
 
