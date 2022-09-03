@@ -74,8 +74,10 @@ def print_statistics():
     last_statistics['cyberlinks'] = data['cyberlinks']
     last_statistics['particles'] = data['particles']
 
-    text = f"""`cyber statistics {get_date()}\n
-            {height}\n{cyberlinks}\n{particles}`"""
+    text = f"""`cyber statistics {get_date()}
+        {height}
+        {cyberlinks}
+        {particles}`"""
 
     bot.send_message('@cyber_russian_community', text, parse_mode='Markdown')
     bot.send_message('@fuckgoogle', text, parse_mode='Markdown')
