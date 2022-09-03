@@ -120,10 +120,10 @@ def price_coins(message):
 def help(message):
     bot.send_message(
         message.chat.id,
-        """Possible commands:\n
-        /price - displays the price of coins\n
-        /cyber_statistics - displays cyber statistics\n
-        /find - find article in wikipedia
+        """Possible commands:
+            /price - displays the price of coins
+            /cyber_statistics - displays cyber statistics
+            /find - find article in wikipedia
         """
     )
 
