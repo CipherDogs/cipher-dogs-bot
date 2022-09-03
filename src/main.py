@@ -71,7 +71,7 @@ def print_statistics():
     last_statistics["cyberlinks"] = data["cyberlinks"]
     last_statistics["particles"] = data["particles"]
 
-    text = f"`cyber statistics {get_date()}\n \
+    text = f"`cyber statistics {get_date()}\n\
 {height}\n{cyberlinks}\n{particles}"
 
     bot.send_message("@cyber_russian_community", text, parse_mode="Markdown")
@@ -82,8 +82,8 @@ def print_statistics():
 def welcome(message):
     bot.send_message(
         message.chat.id,
-        "CipherDogsBot\n \
-Fuck Google! Fuck Twitter! Fuck Web2.0\n \
+        "CipherDogsBot\n\
+Fuck Google! Fuck Twitter! Fuck Web2.0\n\
 https://cipherdogs.net/"
     )
 
@@ -121,9 +121,9 @@ def price_coins(message):
 def help(message):
     bot.send_message(
         message.chat.id,
-        "Possible commands:\n \
-/price - displays the price of coins\n \
-/cyber_statistics - displays cyber statistics\n \
+        "Possible commands:\n\
+/price - displays the price of coins\n\
+/cyber_statistics - displays cyber statistics\n\
 /find - find article in wikipedia"
     )
 
@@ -163,8 +163,8 @@ def statistics(message):
     cyberlinks = "cyberlinks: {}".format(data["cyberlinks"])
     particles = "particles: {}".format(data["particles"])
 
-    text = f"`cyber statistics {get_date()}\n \
-    {height}\n{cyberlinks}\n{particles}`"
+    text = f"`cyber statistics {get_date()}\n\
+{height}\n{cyberlinks}\n{particles}`"
 
     bot.send_message(message.chat.id, text, parse_mode="Markdown")
 
