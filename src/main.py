@@ -20,7 +20,6 @@ coins = [
     "wownero",
     "kulupu",
     "juno-network",
-    "stargaze",
     "secret",
     "acala",
     "moonbeam",
@@ -31,7 +30,10 @@ coins = [
 def delete_message(message):
     try:
         if last_message[message.chat.username] != 0:
-            bot.delete_message(message.chat.id, last_message[message.chat.username])
+            bot.delete_message(
+                message.chat.id,
+                last_message[message.chat.username]
+            )
         last_message[message.chat.username] = message.message_id + 1
     except Exception:
         last_message[message.chat.username] = 0
@@ -136,7 +138,8 @@ def scramble(message):
 @bot.message_handler(commands=["weather"])
 def weather(message):
     bot.send_message(
-        message.chat.id, get_weather(message.text, appid=os.getenv("APPID"))
+        message.chat.id,
+        get_weather(message.text, appid=os.getenv("APPID"))
     )
 
 
@@ -170,12 +173,14 @@ def statistics(message):
 
 
 def run_func():
-    # schedule.every().day.at("16:00").do(print_coins, coins)
     schedule.every().day.at("16:00").do(print_statistics)
 
     while True:
-        schedule.run_pending()
-        time.sleep(1)
+        try:
+            schedule.run_pending()
+            time.sleep(1)
+        except Exception as e:
+            print(f"Error {e}")
 
 
 th = threading.Thread(target=run_func, args=())
