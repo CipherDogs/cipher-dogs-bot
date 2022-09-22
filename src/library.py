@@ -15,7 +15,7 @@ def get_prices(coins):
     for i, name in enumerate(arr):
         try:
             if name == "bostrom":
-                price = data[name]["usd"] * 10**9
+                price = round(data[name]["usd"] * 10**9, 2)
 
             else:
                 price = data[name]["usd"]
