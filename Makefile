@@ -16,3 +16,7 @@ status:
 .PHONY: stop
 stop:
 	systemctl stop bot.service
+
+.PHONY: pull
+stop:
+	git pull
