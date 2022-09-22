@@ -9,22 +9,23 @@ from library import *
 bot = telebot.TeleBot(token=os.getenv("TOKEN"))
 last_message = {"cyber_russian_community": 0, "fuckgoogle": 0}
 last_statistics = {"height": 0, "cyberlinks": 0, "particles": 0}
-coins = [
-    "bitcoin",
-    "ethereum",
-    "polkadot",
-    "kusama",
-    "cosmos",
-    "osmosis",
-    "monero",
-    "wownero",
-    "kulupu",
-    "juno-network",
-    "secret",
-    "acala",
-    "moonbeam",
-    "phala-network",
-]
+coins = {
+    "bitcoin": "BTC",
+    "ethereum": "ETH",
+    "polkadot": "DOT",
+    "kusama": "KSM",
+    "cosmos": "ATOM",
+    "osmosis": "OSMO",
+    "monero": "XMR",
+    "wownero": "WOW",
+    "kulupu": "KLP",
+    "juno-network": "JUNO",
+    "secret": "SCRT",
+    "acala": "ACA",
+    "moonbeam": "GLMR",
+    "pha": "PHA",
+    "bostrom": "GBOOT"
+}
 
 
 def delete_message(message):
@@ -35,6 +36,7 @@ def delete_message(message):
                 last_message[message.chat.username]
             )
         last_message[message.chat.username] = message.message_id + 1
+
     except Exception:
         last_message[message.chat.username] = 0
 
@@ -181,6 +183,7 @@ def run_func():
         try:
             schedule.run_pending()
             time.sleep(1)
+
         except Exception as e:
             print(f"Error {e}")
 
@@ -192,6 +195,7 @@ th.start()
 def telegram_polling():
     try:
         bot.polling(none_stop=True, timeout=60)
+
     except Exception:
         bot.stop_polling()
         time.sleep(10)
