@@ -55,6 +55,7 @@ def print_statistics():
         cyberlinks = f"cyberlinks: {data['cyberlinks']}"
     else:
         diff = int(data["cyberlinks"]) - int(last_statistics["cyberlinks"])
+
         if diff > 0:
             cyberlinks = f"cyberlinks: {data['cyberlinks']} (+{diff})"
         else:
@@ -64,6 +65,7 @@ def print_statistics():
         particles = f"particles: {data['particles']}"
     else:
         diff = int(data["particles"]) - int(last_statistics["particles"])
+
         if diff > 0:
             particles = f"particles: {data['particles']} (+{diff})"
         else:
@@ -102,16 +104,16 @@ def send_sticker_ru(message):
     delete_message(message)
 
 
-@bot.message_handler(
-    func=lambda message: message.chat.username == "fuckgoogle",
-    content_types=["new_chat_members"],
-)
-def send_sticker_en(message):
-    bot.send_sticker(
-        message.chat.id,
-        "CAACAgIAAxkBAAJAhl-ZZlpBtcyICOlr_VyWthXoch_7AAIYAQACK9RLC7eumetzzfY-GwQ",
-    )
-    delete_message(message)
+# @bot.message_handler(
+#     func=lambda message: message.chat.username == "fuckgoogle",
+#     content_types=["new_chat_members"],
+# )
+# def send_sticker_en(message):
+#     bot.send_sticker(
+#         message.chat.id,
+#         "CAACAgIAAxkBAAJAhl-ZZlpBtcyICOlr_VyWthXoch_7AAIYAQACK9RLC7eumetzzfY-GwQ",
+#     )
+#     delete_message(message)
 
 
 @bot.message_handler(commands=["price"])
