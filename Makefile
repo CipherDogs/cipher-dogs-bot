@@ -18,5 +18,5 @@ stop:
 	systemctl stop bot.service
 
 .PHONY: pull
-stop:
+pull:
 	git pull
