@@ -8,7 +8,6 @@ from library import *
 
 bot = telebot.TeleBot(token=os.getenv("TOKEN"))
 last_message = {"cyber_russian_community": 0, "fuckgoogle": 0}
-last_statistics = {"height": 0, "cyberlinks": 0, "particles": 0}
 coins = {
     "bitcoin": "BTC",
     "ethereum": "ETH",
@@ -43,39 +42,52 @@ def delete_message(message):
 
 def print_statistics():
     data = get_statistics()
+    csv_data = []
+
+    csv_wfile = open("file.csv", "a")
+    csv_rfile = open("file.csv", "r")
+
+    csvwriter = csv.writer(csv_wfile)
+    csvreader = csv.reader(csv_rfile)
+
+    for row in csvreader:
+        csv_data.append(row)
+
+    if csv_data == []:
+        csvwriter.writerow(["height", "cyberlinks", "particles"])
 
     height = ""
     cyberlinks = ""
     particles = ""
 
-    if last_statistics["height"] == 0:
+    if len(csv_data) <= 1:
         height = f"height: {data['height']}"
-    else:
-        height = f"height: {last_statistics['height']}"
-
-    if last_statistics["cyberlinks"] == 0:
         cyberlinks = f"cyberlinks: {data['cyberlinks']}"
-    else:
-        diff = int(data["cyberlinks"]) - int(last_statistics["cyberlinks"])
-
-        if diff > 0:
-            cyberlinks = f"cyberlinks: {data['cyberlinks']} (+{diff})"
-        else:
-            cyberlinks = f"cyberlinks: {data['cyberlinks']} ({diff})"
-
-    if last_statistics["particles"] == 0:
         particles = f"particles: {data['particles']}"
+        csvwriter.writerow([data['height'], data['cyberlinks'],
+                            data['particles']])
+
     else:
-        diff = int(data["particles"]) - int(last_statistics["particles"])
+        diff_links = int(data["cyberlinks"]) - int(csv_data[len(csv_data)-1][1])
+        diff_part = int(data["particles"]) - int(csv_data[len(csv_data)-1][2])
 
-        if diff > 0:
-            particles = f"particles: {data['particles']} (+{diff})"
+        height = f"height: {data['height']}"
+
+        if diff_links > 0:
+            cyberlinks = f"cyberlinks: {data['cyberlinks']} (+{diff_links})"
         else:
-            particles = f"particles: {data['particles']} ({diff})"
+            cyberlinks = f"cyberlinks: {data['cyberlinks']} ({diff_links})"
 
-    last_statistics["height"] = data["height"]
-    last_statistics["cyberlinks"] = data["cyberlinks"]
-    last_statistics["particles"] = data["particles"]
+        if diff_part > 0:
+            particles = f"particles: {data['particles']} (+{diff_part})"
+        else:
+            particles = f"particles: {data['particles']} ({diff_part})"
+
+        csvwriter.writerow([data['height'], data['cyberlinks'],
+                            data['particles']])
+
+    csv_wfile.close()
+    csv_rfile.close()
 
     text = f"`cyber statistics {get_date()}\n\
 {height}\n{cyberlinks}\n{particles}`"
