@@ -90,7 +90,7 @@ def print_statistics():
     csv_wfile.close()
     csv_rfile.close()
 
-    text = f"`cyber statistics {get_date()}\n\
+    text = f"`bostrom statistics {get_date()}\n\
 {height}\n{cyberlinks}\n{particles}`"
 
     bot.send_message("@cyber_russian_community", text, parse_mode="Markdown")
@@ -142,7 +142,7 @@ def help(message):
         message.chat.id,
         "Possible commands:\n\
 /price - displays the price of coins\n\
-/cyber_statistics - displays cyber statistics\n\
+/bostrom_statistics - displays bostrom statistics\n\
 /find - find article in wikipedia"
     )
 
@@ -175,7 +175,7 @@ def handle_day(message):
     bot.send_message(message.chat.id, get_celebration())
 
 
-@bot.message_handler(commands=["cyber_statistics"])
+@bot.message_handler(commands=["bostrom_statistics"])
 def statistics(message):
     data = get_statistics()
 
@@ -183,7 +183,7 @@ def statistics(message):
     cyberlinks = "cyberlinks: {}".format(data["cyberlinks"])
     particles = "particles: {}".format(data["particles"])
 
-    text = f"`cyber statistics {get_date()}\n\
+    text = f"`bostrom statistics {get_date()}\n\
 {height}\n{cyberlinks}\n{particles}`"
 
     bot.send_message(message.chat.id, text, parse_mode="Markdown")
