@@ -10,21 +10,21 @@ from library import *
 bot = telebot.TeleBot(token=os.getenv("TOKEN"))
 last_message = {"cyber_russian_community": 0, "fuckgoogle": 0}
 coins = {
-    "bitcoin": "BTC",
-    "ethereum": "ETH",
-    "polkadot": "DOT",
-    "kusama": "KSM",
-    "cosmos": "ATOM",
-    "osmosis": "OSMO",
-    "monero": "XMR",
-    "wownero": "WOW",
-    "kulupu": "KLP",
+    "bitcoin":      "BTC",
+    "ethereum":     "ETH",
+    "polkadot":     "DOT",
+    "kusama":       "KSM",
+    "cosmos":       "ATOM",
+    "osmosis":      "OSMO",
+    "monero":       "XMR",
+    "wownero":      "WOW",
+    "kulupu":       "KLP",
     "juno-network": "JUNO",
-    "secret": "SCRT",
-    "acala": "ACA",
-    "moonbeam": "GLMR",
-    "pha": "PHA",
-    "bostrom": "GBOOT"
+    "secret":       "SCRT",
+    "acala":        "ACA",
+    "moonbeam":     "GLMR",
+    "pha":          "PHA",
+    "bostrom":      "GBOOT"
 }
 
 
@@ -94,7 +94,7 @@ def print_statistics():
 {height}\n{cyberlinks}\n{particles}`"
 
     bot.send_message("@cyber_russian_community", text, parse_mode="Markdown")
-    bot.send_message("@fuckgoogle", text, parse_mode="Markdown")
+    bot.send_message("@fuckgoogle/47887", text, parse_mode="Markdown")
 
 
 @bot.message_handler(commands=["start"])
@@ -207,7 +207,7 @@ th.start()
 
 def telegram_polling():
     try:
-        bot.polling(none_stop=True, timeout=60)
+        bot.polling(none_stop=True, timeout=120)
 
     except Exception:
         bot.stop_polling()
