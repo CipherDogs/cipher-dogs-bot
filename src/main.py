@@ -94,7 +94,7 @@ def print_statistics():
 {height}\n{cyberlinks}\n{particles}`"
 
     bot.send_message("@cyber_russian_community", text, parse_mode="Markdown")
-    bot.send_message("@fuckgoogle/47887", text, parse_mode="Markdown")
+    # bot.send_message("@fuckgoogle/47887", text, parse_mode="Markdown")
 
 
 @bot.message_handler(commands=["start"])
