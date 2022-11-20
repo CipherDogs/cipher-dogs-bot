@@ -67,11 +67,11 @@ def get_scramble():
     return scramble.strip()
 
 
-def get_weather(city, key):
+def get_weather(city, appid):
     city = city[9:]
 
     try:
-        r = requests.get(f"https://api.weatherapi.com/v1/current.json?key={key}&q={city}&aqi=no")
+        r = requests.get(f"https://api.weatherapi.com/v1/current.json?key={appid}&q={city}&aqi=no")
         data = r.json()
 
     except Exception:
