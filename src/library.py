@@ -67,33 +67,28 @@ def get_scramble():
     return scramble.strip()
 
 
-def get_weather(city, appid):
+def get_weather(city, key):
     city = city[9:]
 
     try:
-        r = requests.get(f"https://api.openweathermap.org/geo/1.0/direct?q={city}&limit=5&appid={appid}")
+        r = requests.get(f"https://api.weatherapi.com/v1/current.json?key={key}&q={city}&aqi=no")
         data = r.json()
-        lat = round(data[0]["lat"])
-        lon = round(data[0]["lon"])
 
     except Exception:
         return "Sorry, there is no such city."
 
     else:
-        q = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={appid}")
-        data = q.json()
-
-        main = data["weather"][0]["description"]
-        temp = data["main"]["temp"]
-        humidity = data["main"]["humidity"]
-        wind = data["wind"]["speed"]
+        main = data["current"]['condition']['text']
+        temp = data["current"]["temp_c"]
+        humidity = data["current"]["humidity"]
+        wind = data["current"]["wind_kph"]
 
         main = main.title()
-        temp = str(round(temp - 273.15)) + '°C'
-        wind = str(round(wind)) + ' m/s'
-        humidity = str(humidity) + '%'
+        temp = str(round(temp)) + '°C'
+        wind = str(round(wind/3.6)) + ' m/s'
+        humi = str(humidity) + '%'
 
-        return f"Main: {main}\nTemp: {temp}\nWind: {wind}\nHumidity: {humidity}"
+        return f"Main: {main}\nTemp: {temp}\nWind: {wind}\nHumidity: {humi}"
 
 
 def get_wiki(text):
