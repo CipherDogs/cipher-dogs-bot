@@ -80,15 +80,17 @@ def get_weather(city, appid):
     else:
         main = data["current"]['condition']['text']
         temp = data["current"]["temp_c"]
+        ftemp = data["current"]["feelslike_c"]
         humidity = data["current"]["humidity"]
         wind = data["current"]["wind_kph"]
 
         main = main.title()
-        temp = str(round(temp)) + '°C'
+        temp = str(round(temp))
+        ftemp = str(round(ftemp))
         wind = str(round(wind/3.6)) + ' m/s'
         humi = str(humidity) + '%'
 
-        return f"Main: {main}\nTemp: {temp}\nWind: {wind}\nHumidity: {humi}"
+        return f"Main: {main}\nTemp: {temp} ({ftemp}) °C\nWind: {wind}\nHumidity: {humi}"
 
 
 def get_wiki(text):
