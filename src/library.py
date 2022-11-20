@@ -90,7 +90,7 @@ def get_weather(city, appid):
         wind = str(round(wind/3.6)) + ' m/s'
         humi = str(humidity) + '%'
 
-        return f"Main: {main}\nTemp: {temp} ({ftemp}) °C\nWind: {wind}\nHumidity: {humi}"
+        return f"Main: {main}\nTemp: {temp}({ftemp})  °C\nWind: {wind}\nHumidity: {humi}"
 
 
 def get_wiki(text):
