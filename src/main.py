@@ -9,6 +9,8 @@ from library import *
 
 bot = telebot.TeleBot(token=os.getenv("TOKEN"))
 last_message = {"cyber_russian_community": 0, "fuckgoogle": 0}
+url_bostrom = "https://lcd.bostrom.cybernode.ai/graph/graph_stats"
+url_pussy = "https://lcd.space-pussy.cybernode.ai/graph/graph_stats"
 coins = {
     "bitcoin":      "BTC",
     "ethereum":     "ETH",
@@ -41,12 +43,12 @@ def delete_message(message):
         last_message[message.chat.username] = 0
 
 
-def print_statistics():
-    data = get_statistics()
+def print_statistics(url, file_name, title):
+    data = get_stat(url)
     csv_data = []
 
-    csv_wfile = open("file.csv", "a")
-    csv_rfile = open("file.csv", "r")
+    csv_wfile = open(f"{file_name}.csv", "a")
+    csv_rfile = open(f"{file_name}.csv", "r")
 
     csvwriter = csv.writer(csv_wfile)
     csvreader = csv.reader(csv_rfile)
@@ -90,11 +92,9 @@ def print_statistics():
     csv_wfile.close()
     csv_rfile.close()
 
-    text = f"`bostrom statistics {get_date()}\n\
-{height}\n{cyberlinks}\n{particles}`"
+    text = f"`{title} {get_date()}\n{height}\n{cyberlinks}\n{particles}`"
 
     bot.send_message("@cyber_russian_community", text, parse_mode="Markdown")
-    # bot.send_message("@fuckgoogle/47887", text, parse_mode="Markdown")
 
 
 @bot.message_handler(commands=["start"])
@@ -119,18 +119,6 @@ def send_sticker_ru(message):
     delete_message(message)
 
 
-# @bot.message_handler(
-#     func=lambda message: message.chat.username == "fuckgoogle",
-#     content_types=["new_chat_members"],
-# )
-# def send_sticker_en(message):
-#     bot.send_sticker(
-#         message.chat.id,
-#         "CAACAgIAAxkBAAJAhl-ZZlpBtcyICOlr_VyWthXoch_7AAIYAQACK9RLC7eumetzzfY-GwQ",
-#     )
-#     delete_message(message)
-
-
 @bot.message_handler(commands=["price"])
 def price_coins(message):
     bot.send_message(message.chat.id, get_prices(coins))
@@ -143,6 +131,7 @@ def help(message):
         "Possible commands:\n\
 /price - displays the price of coins\n\
 /bostrom_statistics - displays bostrom statistics\n\
+/pussy_statistics - displays bostrom statistics\n\
 /find - find article in wikipedia"
     )
 
@@ -177,28 +166,32 @@ def handle_day(message):
 
 @bot.message_handler(commands=["bostrom_statistics"])
 def statistics(message):
-    data = get_statistics()
+    text = gen_stat(url_bostrom, "bostrom statistics")
+    bot.send_message(message.chat.id, text, parse_mode="Markdown")
 
-    height = "height: {}".format(data["height"])
-    cyberlinks = "cyberlinks: {}".format(data["cyberlinks"])
-    particles = "particles: {}".format(data["particles"])
 
-    text = f"`bostrom statistics {get_date()}\n\
-{height}\n{cyberlinks}\n{particles}`"
-
+@bot.message_handler(commands=["pussy_statistics"])
+def statistics(message):
+    text = gen_stat(url_pussy, "space pussy statistics")
     bot.send_message(message.chat.id, text, parse_mode="Markdown")
 
 
 def run_func():
-    schedule.every().day.at("16:00").do(print_statistics)
-
+    schedule.every().day.at("16:00").do(print_statistics,
+                                        url=url_bostrom,
+                                        file_name="bostrom",
+                                        title="bostrom statistics")
+    schedule.every().day.at("16:00").do(print_statistics,
+                                        url=url_pussy,
+                                        file_name="pussy",
+                                        title="space pussy statistics")
     while True:
         try:
             schedule.run_pending()
             time.sleep(1)
 
         except Exception as e:
-            print(f"Error {e}")
+            print(f"Error {e}!")
 
 
 th = threading.Thread(target=run_func, args=())

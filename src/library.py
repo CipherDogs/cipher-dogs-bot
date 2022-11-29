@@ -33,9 +33,9 @@ def get_date():
     return '{}.{}.{}\n'.format(today.day, today.month, today.year)
 
 
-def get_statistics():
+def get_stat(url):
     try:
-        r = requests.get('https://lcd.bostrom.cybernode.ai/graph/graph_stats')
+        r = requests.get(url)
         data = {}
         data['height'] = r.json()['height']
         data['cyberlinks'] = r.json()['result']['cyberlinks']
@@ -45,6 +45,17 @@ def get_statistics():
 
     except Exception:
         return {}
+
+
+def gen_stat(url, name):
+    data = get_stat(url)
+
+    height = "height: {}".format(data["height"])
+    cyberlinks = "cyberlinks: {}".format(data["cyberlinks"])
+    particles = "particles: {}".format(data["particles"])
+
+    text = f"`{name} {get_date()}\n{height}\n{cyberlinks}\n{particles}`"
+    return text
 
 
 def get_scramble():
@@ -90,7 +101,7 @@ def get_weather(city, appid):
         wind = str(round(wind/3.6)) + ' m/s'
         humi = str(humidity) + '%'
 
-        return f"Main: {main}\nTemp: {temp}({ftemp})  °C\nWind: {wind}\nHumidity: {humi}"
+        return f"Main: {main}\nTemp: {temp} ({ftemp})  °C\nWind: {wind}\nHumidity: {humi}"
 
 
 def get_wiki(text):
