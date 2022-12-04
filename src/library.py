@@ -92,20 +92,24 @@ def get_weather(city, appid):
         return "Sorry, there is no such city."
 
     else:
-        q = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={appid}")
-        data = q.json()
+        try:
+            q = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={appid}")
+            data = q.json()
 
-        main = data["weather"][0]["description"]
-        temp = data["main"]["temp"]
-        humidity = data["main"]["humidity"]
-        wind = data["wind"]["speed"]
+        except Exception as e:
+            print(e)
+        else:
+            main = data["weather"][0]["description"]
+            temp = data["main"]["temp"]
+            humidity = data["main"]["humidity"]
+            wind = data["wind"]["speed"]
 
-        main = main.title()
-        temp = str(round(temp - 273.15)) + '°C'
-        wind = str(round(wind)) + ' m/s'
-        humidity = str(humidity) + '%'
+            main = main.title()
+            temp = str(round(temp - 273.15)) + '°C'
+            wind = str(round(wind)) + ' m/s'
+            humidity = str(humidity) + '%'
 
-        return f"Main: {main}\nTemp: {temp}\nWind: {wind}\nHumidity: {humidity}"
+            return f"Main: {main}\nTemp: {temp}\nWind: {wind}\nHumidity: {humidity}"
 
 
 def get_wiki(text):
