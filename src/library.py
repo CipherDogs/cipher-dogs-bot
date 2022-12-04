@@ -87,7 +87,8 @@ def get_weather(city, appid):
         lat = round(data[0]["lat"])
         lon = round(data[0]["lon"])
 
-    except Exception:
+    except Exception as e:
+        print(e)
         return "Sorry, there is no such city."
 
     else:
