@@ -131,7 +131,7 @@ def help(message):
         "Possible commands:\n\
 /price - displays the price of coins\n\
 /bostrom_statistics - displays bostrom statistics\n\
-/pussy_statistics - displays bostrom statistics\n\
+/pussy_statistics - displays space pussy statistics\n\
 /find - find article in wikipedia"
     )
 

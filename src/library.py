@@ -82,26 +82,29 @@ def get_weather(city, appid):
     city = city[9:]
 
     try:
-        r = requests.get(f"https://api.weatherapi.com/v1/current.json?key={appid}&q={city}&aqi=no")
+        r = requests.get(f"https://api.openweathermap.org/geo/1.0/direct?q={city}&limit=5&appid={appid}")
         data = r.json()
+        lat = round(data[0]["lat"])
+        lon = round(data[0]["lon"])
 
     except Exception:
         return "Sorry, there is no such city."
 
     else:
-        main = data["current"]['condition']['text']
-        temp = data["current"]["temp_c"]
-        ftemp = data["current"]["feelslike_c"]
-        humidity = data["current"]["humidity"]
-        wind = data["current"]["wind_kph"]
+        q = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={appid}")
+        data = q.json()
+
+        main = data["weather"][0]["description"]
+        temp = data["main"]["temp"]
+        humidity = data["main"]["humidity"]
+        wind = data["wind"]["speed"]
 
         main = main.title()
-        temp = str(round(temp))
-        ftemp = str(round(ftemp))
-        wind = str(round(wind/3.6)) + ' m/s'
-        humi = str(humidity) + '%'
+        temp = str(round(temp - 273.15)) + '°C'
+        wind = str(round(wind)) + ' m/s'
+        humidity = str(humidity) + '%'
 
-        return f"Main: {main}\nTemp: {temp} ({ftemp})  °C\nWind: {wind}\nHumidity: {humi}"
+        return f"Main: {main}\nTemp: {temp}\nWind: {wind}\nHumidity: {humidity}"
 
 
 def get_wiki(text):
