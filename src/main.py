@@ -12,21 +12,23 @@ last_message = {"cyber_russian_community": 0, "fuckgoogle": 0}
 url_bostrom = "https://lcd.bostrom.cybernode.ai/graph/graph_stats"
 url_pussy = "https://lcd.space-pussy.cybernode.ai/graph/graph_stats"
 coins = {
-    "bitcoin":      "BTC",
-    "ethereum":     "ETH",
-    "polkadot":     "DOT",
-    "kusama":       "KSM",
-    "cosmos":       "ATOM",
-    "osmosis":      "OSMO",
-    "monero":       "XMR",
-    "wownero":      "WOW",
-    "kulupu":       "KLP",
-    "juno-network": "JUNO",
-    "secret":       "SCRT",
-    "acala":        "ACA",
-    "moonbeam":     "GLMR",
-    "pha":          "PHA",
-    "bostrom":      "GBOOT"
+    "bitcoin":          "BTC",
+    "ethereum":         "ETH",
+    "polkadot":         "DOT",
+    "kusama":           "KSM",
+    "pha":              "PHA",
+    "cosmos":           "ATOM",
+    "osmosis":          "OSMO",
+    "evmos":            "EVMOS",
+    "juno-network":     "JUNO",
+    "secret":           "SCRT",
+    "eos":              "EOS",
+    "mina-protocol":    "MINA",
+    "the-open-network": "TON",
+    "monero":           "XMR",
+    "wownero":          "WOW",
+    "kulupu":           "KLP",
+    "bostrom":          "GBOOT"
 }
 
 
