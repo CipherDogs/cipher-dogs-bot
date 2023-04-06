@@ -8,24 +8,29 @@ def get_prices(coins):
     string = ""
     separator = ","
     arr = list(coins.keys())
-    src = f"https://api.coingecko.com/api/v3/simple/price?ids={separator.join(arr)}&vs_currencies=usd"
-    r = requests.get(src)
-    data = r.json()
 
-    for i, name in enumerate(arr):
-        try:
-            if name == "bostrom":
-                price = round(data[name]["usd"] * 10**9, 2)
+    try:
+        src = f"https://api.coingecko.com/api/v3/simple/price?ids={separator.join(arr)}&vs_currencies=usd"
+        r = requests.get(src)
+        data = r.json()
 
-            else:
-                price = data[name]["usd"]
+        for i, name in enumerate(arr):
+            try:
+                if name == "bostrom":
+                    price = round(data[name]["usd"] * 10**9, 2)
 
-            string += f"{coins[name]}: ${str(price)}\n"
+                else:
+                    price = data[name]["usd"]
 
-        except Exception:
-            print(f"Problem {name}!")
+                string += f"{coins[name]}: ${str(price)}\n"
 
-    return string
+            except Exception:
+                print(f"Problem {name}!")
+
+        return string
+
+    except Exception as e:
+        return string
 
 
 def get_date():
@@ -98,6 +103,7 @@ def get_weather(city, appid):
 
         except Exception as e:
             print(e)
+
         else:
             main = data["weather"][0]["description"]
             temp = data["main"]["temp"]
