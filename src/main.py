@@ -165,15 +165,18 @@ def handle_cont(message):
 def handle_day(message):
     bot.send_message(message.chat.id, get_celebration())
 
+@bot.message_handler(commands=["price_now"])
+def price_now(message):
+    bot.send_message(message.chat.id, get_now_price(message.text))
 
 @bot.message_handler(commands=["bostrom_statistics"])
-def statistics(message):
+def bostrom_statistics(message):
     text = gen_stat(url_bostrom, "bostrom statistics")
     bot.send_message(message.chat.id, text, parse_mode="Markdown")
 
 
 @bot.message_handler(commands=["pussy_statistics"])
-def statistics(message):
+def pussy_statistics(message):
     text = gen_stat(url_pussy, "space pussy statistics")
     bot.send_message(message.chat.id, text, parse_mode="Markdown")
 

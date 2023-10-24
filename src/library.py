@@ -29,8 +29,18 @@ def get_prices(coins):
 
         return string
 
-    except Exception as e:
+    except Exception:
         return string
+
+def get_now_price(coin):
+    try:
+        coin = coin[11:]
+        src = f"https://api.bitfinex.com/v1/pubticker/{coin}usd"
+        r = requests.get(src)
+        data = r.json()
+        return f"Now: {data["ask"]}\nLow: {data["low"]}\nHigh: {data["high"]}"
+    except Exception:
+        return "Not Found Coin"
 
 
 def get_date():
