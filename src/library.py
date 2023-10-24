@@ -38,7 +38,10 @@ def get_now_price(coin):
         src = f"https://api.bitfinex.com/v1/pubticker/{coin}usd"
         r = requests.get(src)
         data = r.json()
-        return f"Now: {data["ask"]}\nLow: {data["low"]}\nHigh: {data["high"]}"
+        now = data["ask"]
+        low = data["low"]
+        high = data["high"]
+        return f"Now: {now}\nLow: {low}\nHigh: {high}"
     except Exception:
         return "Not Found Coin"
 
